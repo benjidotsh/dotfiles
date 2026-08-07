@@ -1,0 +1,18 @@
+vscode "anthropic.claude-code"
+vscode "bierner.markdown-mermaid"
+vscode "catppuccin.catppuccin-vsc"
+vscode "catppuccin.catppuccin-vsc-icons"
+vscode "dbaeumer.vscode-eslint"
+vscode "eamodio.gitlens"
+vscode "esbenp.prettier-vscode"
+vscode "github.copilot-chat"
+vscode "openai.chatgpt"
+{{ if eq .profile "personal" -}}
+vscode "antyos.openscad"
+vscode "bradlc.vscode-tailwindcss"
+vscode "platformio.platformio-ide"
+vscode "prisma.prisma"
+{{ else -}}
+vscode "golang.go"
+vscode "hashicorp.terraform"
+{{ end -}}

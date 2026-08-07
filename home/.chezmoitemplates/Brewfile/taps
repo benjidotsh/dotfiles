@@ -1,0 +1,6 @@
+{{ if eq .profile "personal" -}}
+tap "oven-sh/bun"
+{{ else -}}
+tap "hashicorp/tap"
+tap "benjidotsh/tap"
+{{ end -}}

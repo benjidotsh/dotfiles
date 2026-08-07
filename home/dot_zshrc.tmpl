@@ -6,7 +6,20 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 eval "$(starship init zsh)"
 eval "$(direnv hook zsh)"
 
-source "$HOME/.config/dotfiles/environment"
+export EDITOR='code --wait'
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+{{ if eq .profile "personal" -}}
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home'
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
+{{ else -}}
+export AWS_CA_BUNDLE='/opt/homebrew/etc/ca-certificates/cert.pem'
+export NODE_EXTRA_CA_CERTS="$HOME/.zcli/zscaler_root.pem"
+export GONOSUMDB='persgroep.cloud/*'
+export PATH="$PATH:$HOME/go/bin"
+{{ end -}}
+
 if [ -f "$HOME/.config/dotfiles/secrets" ]; then
   source "$HOME/.config/dotfiles/secrets"
 fi

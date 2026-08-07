@@ -1,0 +1,9 @@
+mas "The Unarchiver", id: 425424353
+mas "Boop", id: 1518425043
+mas "Xcode", id: 497799835
+{{ if eq .profile "personal" -}}
+mas "1Password for Safari", id: 1569813296
+{{ else -}}
+mas "Slack", id: 803453959
+mas "Hidden Bar", id: 1452453066
+{{ end -}}
