@@ -1,0 +1,18 @@
+[dock]
+personal = [
+  "/System/Applications/Apps.app",
+  "/System/Cryptexes/App/System/Applications/Safari.app",
+  "/Applications/Discord.app",
+  "/Applications/Spotify.app",
+  "/Applications/Visual Studio Code.app",
+  "/Applications/Ghostty.app",
+]
+work = [
+  "/System/Applications/Apps.app",
+  "/Applications/Helium.app",
+  "/Applications/Slack.app",
+  "/Applications/Discord.app",
+  "/Applications/Spotify.app",
+  "/Applications/Visual Studio Code.app",
+  "/Applications/Ghostty.app",
+]

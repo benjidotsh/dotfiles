@@ -1,6 +1,3 @@
 {{ if eq .profile "personal" -}}
 DPG
-{{ else -}}
-.chezmoiscripts/15-install-rosetta.sh
-.chezmoiscripts/30-android-sdk.sh
 {{ end -}}

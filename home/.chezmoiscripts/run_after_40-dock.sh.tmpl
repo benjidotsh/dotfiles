@@ -4,15 +4,8 @@ set -eu
 dockutil=/opt/homebrew/bin/dockutil
 
 "$dockutil" --remove all --no-restart
-"$dockutil" --add /System/Applications/Apps.app --no-restart
-{{ if eq .profile "personal" -}}
-"$dockutil" --add /System/Cryptexes/App/System/Applications/Safari.app --no-restart
-{{ else -}}
-"$dockutil" --add /Applications/Helium.app --no-restart
-"$dockutil" --add /Applications/Slack.app --no-restart
+{{ range index .dock .profile -}}
+"$dockutil" --add {{ . | quote }} --no-restart
 {{ end -}}
-"$dockutil" --add /Applications/Discord.app --no-restart
-"$dockutil" --add /Applications/Spotify.app --no-restart
-"$dockutil" --add "/Applications/Visual Studio Code.app" --no-restart
-"$dockutil" --add /Applications/Ghostty.app --no-restart
 "$dockutil" --add "$HOME/Downloads" --display folder --no-restart
+/usr/bin/killall Dock
