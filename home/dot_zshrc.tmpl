@@ -1,0 +1,24 @@
+autoload -Uz compinit
+compinit
+
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+eval "$(starship init zsh)"
+eval "$(direnv hook zsh)"
+
+source "$HOME/.config/dotfiles/environment"
+if [ -f "$HOME/.config/dotfiles/secrets" ]; then
+  source "$HOME/.config/dotfiles/secrets"
+fi
+
+{{ if eq .profile "work" -}}
+fix-compinit() {
+  compaudit | while IFS= read -r file; do
+    sudo chmod 755 "$file" "$(dirname "$file")"
+    sudo chown "$(whoami)" "$file"
+  done
+}
+{{ end -}}
+
+# Syntax highlighting must be sourced after all other Zsh setup.
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

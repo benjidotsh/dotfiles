@@ -1,0 +1,38 @@
+[alias]
+	amend = commit --amend
+
+[commit]
+	gpgSign = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+	required = true
+	smudge = git-lfs smudge -- %f
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[tag]
+	gpgSign = true
+
+[user]
+	email = benji.janssens@gmail.com
+	name = Benjamin Janssens
+	signingKey = ~/.ssh/personal.pub
+{{ if eq .profile "work" }}
+[includeIf "gitdir:~/DPG/"]
+	path = ~/DPG/.ssh/.gitconfig
+{{ end -}}

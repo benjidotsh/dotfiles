@@ -1,0 +1,31 @@
+{
+  "workbench.startupEditor": "none",
+  "security.workspace.trust.enabled": false,
+  "editor.fontFamily": "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace",
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "prettier.requireConfig": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "gitlens.codeLens.enabled": false,
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "chat.agent.maxRequests": 100,
+  "chat.useAgentSkills": true,
+  "github.copilot.chat.claudeAgent.allowDangerouslySkipPermissions": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "claudeCode.preferredLocation": "sidebar"{{ if eq .profile "personal" }},
+  "[prisma]": {
+    "editor.defaultFormatter": "prisma.prisma"
+  }{{ end }}
+}

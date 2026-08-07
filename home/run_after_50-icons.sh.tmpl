@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+set_icon() {
+  target=$1
+  icon=$2
+
+  if [ -e "$target" ]; then
+    /opt/homebrew/bin/fileicon set "$target" "$icon"
+  fi
+}
+
+{{ if eq .profile "personal" -}}
+set_icon /Applications/Steam.app "$HOME/.local/share/dotfiles/icons/steam.icns"
+set_icon "$HOME/Applications/Stardew Valley.app" "$HOME/.local/share/dotfiles/icons/stardew_valley.icns"
+{{ else -}}
+set_icon "$HOME/DPG" "$HOME/.local/share/dotfiles/icons/dpg_media.icns"
+set_icon "/Applications/NoSQL Workbench.app" "$HOME/.local/share/dotfiles/icons/nosql_workbench.icns"
+{{ end -}}

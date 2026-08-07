@@ -1,0 +1,10 @@
+{{ if eq .profile "personal" -}}
+.local/share/dotfiles/icons/dpg_media.icns
+.local/share/dotfiles/icons/nosql_workbench.icns
+DPG
+{{ else -}}
+15-install-rosetta.sh
+30-android-sdk.sh
+.local/share/dotfiles/icons/stardew_valley.icns
+.local/share/dotfiles/icons/steam.icns
+{{ end -}}
