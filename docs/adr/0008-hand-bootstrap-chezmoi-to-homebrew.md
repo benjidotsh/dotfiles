@@ -1,0 +1,3 @@
+# Hand bootstrap chezmoi to Homebrew
+
+On a fresh machine, use chezmoi's official installer to stage its binary in `~/.local/bin`, then run `init --apply --skip-secrets --purge-binary`. The non-secret apply installs Homebrew, whose authoritative Brewfile installs the durable chezmoi binary; a successful apply deletes the staged binary, while a failed apply leaves it available for diagnosis and retry. This avoids separately bootstrapping Homebrew, keeping a standalone tool outside the software inventory, or leaving duplicate binaries whose selection depends on `PATH`. After 1Password onboarding, run a normal apply and finish bootstrap with one manual macOS logout/login so Desktop Services and deferred preferences take effect. No script forces or prompts for logout.
