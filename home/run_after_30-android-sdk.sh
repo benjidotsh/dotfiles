@@ -1,7 +1,6 @@
 #!/bin/sh
 set -eu
 
-{{ if eq .profile "personal" -}}
 sdk_root="$HOME/Library/Android/sdk"
 sdkmanager=$(command -v sdkmanager)
 
@@ -11,4 +10,3 @@ yes | "$sdkmanager" --sdk_root="$sdk_root" --licenses
 "$sdkmanager" --sdk_root="$sdk_root" \
   platform-tools \
   emulator
-{{ end -}}

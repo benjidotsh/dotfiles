@@ -17,10 +17,12 @@ Chezmoi-managed personal computing environment for Apple Silicon macOS.
 4. Apply the secret-backed state:
 
    ```sh
-   chezmoi apply
+   /opt/homebrew/bin/chezmoi apply
    ```
 
-5. Log out of macOS and back in once. This activates deferred Desktop
+5. If enabling VS Code Settings Sync, open `Settings Sync: Configure` and
+   leave `Extensions` unchecked. The Brewfile is the sole extension owner.
+6. Log out of macOS and back in once. This activates deferred Desktop
    Services and preference changes.
 
 Select `personal` or `work` when prompted. The public-key prompts accept

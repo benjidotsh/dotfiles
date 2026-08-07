@@ -1,8 +1,6 @@
-{{ if eq .profile "work" -}}
 [core]
   sshCommand = ssh -i ~/DPG/.ssh/id_ed25519.pub -o IdentitiesOnly=yes
 
 [user]
   email = benjamin.janssens@persgroep.net
   signingkey = ~/DPG/.ssh/id_ed25519.pub
-{{ end -}}
