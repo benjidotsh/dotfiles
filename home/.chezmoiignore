@@ -1,10 +1,6 @@
 {{ if eq .profile "personal" -}}
-.local/share/dotfiles/icons/dpg_media.icns
-.local/share/dotfiles/icons/nosql_workbench.icns
 DPG
 {{ else -}}
 .chezmoiscripts/15-install-rosetta.sh
 .chezmoiscripts/30-android-sdk.sh
-.local/share/dotfiles/icons/stardew_valley.icns
-.local/share/dotfiles/icons/steam.icns
 {{ end -}}

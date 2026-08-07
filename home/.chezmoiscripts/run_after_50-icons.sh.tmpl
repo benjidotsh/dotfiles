@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+icons_dir={{ joinPath .chezmoi.workingTree "icons" | quote }}
+
 set_icon() {
   target=$1
   icon=$2
@@ -11,9 +13,9 @@ set_icon() {
 }
 
 {{ if eq .profile "personal" -}}
-set_icon /Applications/Steam.app "$HOME/.local/share/dotfiles/icons/steam.icns"
-set_icon "$HOME/Applications/Stardew Valley.app" "$HOME/.local/share/dotfiles/icons/stardew_valley.icns"
+set_icon /Applications/Steam.app "$icons_dir/steam.icns"
+set_icon "$HOME/Applications/Stardew Valley.app" "$icons_dir/stardew_valley.icns"
 {{ else -}}
-set_icon "$HOME/DPG" "$HOME/.local/share/dotfiles/icons/dpg_media.icns"
-set_icon "/Applications/NoSQL Workbench.app" "$HOME/.local/share/dotfiles/icons/nosql_workbench.icns"
+set_icon "$HOME/DPG" "$icons_dir/dpg_media.icns"
+set_icon "/Applications/NoSQL Workbench.app" "$icons_dir/nosql_workbench.icns"
 {{ end -}}
