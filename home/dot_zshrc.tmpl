@@ -2,7 +2,9 @@ autoload -Uz compinit
 compinit
 
 eval "$(starship init zsh)"
+{{ if eq .profile "work" -}}
 eval "$(direnv hook zsh)"
+{{ end -}}
 
 export EDITOR='code --wait'
 export VOLTA_HOME="$HOME/.volta"

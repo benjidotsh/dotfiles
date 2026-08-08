@@ -24,7 +24,7 @@ logout.
 `AppleInterfaceStyle` should ideally be set through System Events' supported
 `dark mode` scripting property, which triggers the normal live appearance
 transition and needs no process restart. If the design keeps the raw global
-default for exact parity, only newly launched apps are guaranteed to see it;
+default for behavioral parity, only newly launched apps are guaranteed to see it;
 an eventual logout/login covers all applications.
 
 ## Matrix

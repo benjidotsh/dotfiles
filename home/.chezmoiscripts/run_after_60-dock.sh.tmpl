@@ -7,5 +7,7 @@ dockutil=/opt/homebrew/bin/dockutil
 {{ range (index .dock .profile).apps -}}
 "$dockutil" --add {{ . | quote }} --no-restart
 {{ end -}}
-"$dockutil" --add "$HOME/Downloads" --display folder --no-restart
+{{ range (index .dock .profile).folders -}}
+"$dockutil" --add "{{ . }}" --display folder --no-restart
+{{ end -}}
 /usr/bin/killall Dock

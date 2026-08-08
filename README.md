@@ -25,8 +25,7 @@ Chezmoi-managed personal computing environment for Apple Silicon macOS.
 6. Log out of macOS and back in once. This activates deferred Desktop
    Services and preference changes.
 
-Select `personal` or `work` when prompted. The public-key prompts accept
-1Password secret references such as `op://Private/GitHub SSH/public key`.
+Select `personal` or `work` when prompted.
 Never run `chezmoi` as root; focused scripts request `sudo` when required.
 
 ## Routine convergence

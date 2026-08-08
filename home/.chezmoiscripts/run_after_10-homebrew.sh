@@ -5,4 +5,3 @@ brew=/opt/homebrew/bin/brew
 
 "$brew" update
 "$brew" bundle install --upgrade --force-cleanup --zap --global
-/opt/homebrew/bin/code --update-extensions

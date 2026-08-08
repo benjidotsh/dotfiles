@@ -13,5 +13,5 @@ set_icon() {
 }
 
 {{ range $target, $icon := .icons -}}
-set_icon {{ $target | quote }} "$icons_dir/{{ $icon }}"
+set_icon "{{ $target }}" "$icons_dir/{{ $icon }}"
 {{ end -}}

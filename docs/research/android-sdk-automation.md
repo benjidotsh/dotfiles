@@ -69,39 +69,18 @@ to what the app supports. [Android AVD documentation](https://developer.android.
 
 ## Minimal chezmoi script
 
-Assuming the selected profile is available as `.profile`, place this at
-`run_after_30-android-sdk.sh.tmpl`:
-
-```sh
-{{ if eq .profile "personal" -}}
-#!/bin/sh
-set -eu
-
-sdk_root="$HOME/Library/Android/sdk"
-sdkmanager="$(command -v sdkmanager)"
-
-mkdir -p "$sdk_root"
-
-yes | "$sdkmanager" --sdk_root="$sdk_root" --licenses
-"$sdkmanager" --sdk_root="$sdk_root" --update
-"$sdkmanager" --sdk_root="$sdk_root" \
-  "platform-tools" \
-  "emulator"
-{{ end -}}
-```
+The shipped script is `home/.chezmoiscripts/run_after_20-android-sdk.sh.tmpl`:
+gated on the personal profile, it accepts licenses non-interactively, runs
+`sdkmanager --update`, and installs the baseline packages.
 
 A normal `run_` script executes on every `chezmoi apply`. That is intentional:
 it notices newly required licenses, updates already installed packages, and
 repairs a deleted baseline. Chezmoi runs scripts in deterministic name order,
-so `30-android-sdk` can follow the Homebrew convergence script.
+so the SDK script can follow the Homebrew convergence script.
 [Chezmoi target types](https://www.chezmoi.io/reference/target-types/)
 
-The environment remains:
-
-```sh
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools"
-```
+The `ANDROID_HOME` and `PATH` exports live in the personal-profile branch of
+`home/dot_zshrc.tmpl`.
 
 Android documents `ANDROID_HOME` as the SDK installation directory and says
 `ANDROID_SDK_ROOT` is deprecated. It also documents adding SDK tool directories

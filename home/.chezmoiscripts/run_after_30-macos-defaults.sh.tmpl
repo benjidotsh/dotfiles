@@ -3,8 +3,8 @@ set -eu
 
 {{ range $domain, $keys := .macos.defaults -}}
 {{ range $key, $value := $keys -}}
-{{ $type := "string" -}}
-{{ if eq (kindOf $value) "bool" }}{{ $type = "bool" }}{{ else if eq (kindOf $value) "int64" }}{{ $type = "int" }}{{ end -}}
+{{ $type := get (dict "bool" "bool" "int64" "int" "float64" "float" "string" "string") (kindOf $value) -}}
+{{ if not $type }}{{ fail (printf "unsupported defaults type %s for %s %s" (kindOf $value) $domain $key) }}{{ end -}}
 defaults write {{ $domain | quote }} {{ $key | quote }} -{{ $type }} {{ $value | quote }}
 {{ end -}}
 {{ end -}}
