@@ -1,11 +1,8 @@
-## General
-
-- Be extremely concise. Sacrifice grammar for the sake of concision.
-- Do not preserve backward compatibility. Remove obsolete paths instead of adding compatibility layers, fallbacks, or migrations.
-- Choose the simplest implementation that fully meets the current requirements. Avoid speculative abstractions, configuration, and indirection.
-- Grow the system in layers. Start from the smallest version that works end to end, and add each new capability on top of a product that already works. Never trade a working product for unfinished complexity.
-- Keep components modular and concerns clearly separated.
-- Prefer established, well-maintained libraries when they reduce overall complexity or improve reliability. Do not reimplement common functionality without a clear reason.
-- Lean on the dependencies already in the project before writing your own implementation or adding packages. Do not assume a library lacks a capability without checking its documentation and types.
-- Make architectural decisions for the long term. Do not accept a stopgap that only works for now and is meant to be replaced later.
-- Study how established products solve the problem before designing a solution. Adopt their proven patterns and conventions rather than inventing an approach from scratch.
+- Don’t maintain backward compatibility by default. Remove obsolete code paths instead of piling on compatibility layers, migrations, and fallbacks.
+- Use the simplest implementation that satisfies today’s requirements. Avoid speculative abstractions, excessive configurability, and unnecessary indirection.
+- Build incrementally from a working end-to-end system. Add capabilities layer by layer; don’t sacrifice something that works for unfinished complexity.
+- Keep things modular. Separate components and responsibilities clearly.
+- Prefer mature, maintained libraries when they reduce complexity or improve reliability; don’t reinvent standard functionality without a good reason.
+- Use what the project already depends on first. Before implementing something yourself or adding a dependency, check the existing libraries’ documentation and types.
+- Make architecture choices that can last. Avoid knowingly temporary stopgaps that are intended to be replaced later.
+- Before designing a solution, study how established products already solve the problem. Prefer their proven patterns and conventions instead of inventing a completely new approach.
