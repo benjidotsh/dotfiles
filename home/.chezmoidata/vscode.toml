@@ -18,8 +18,8 @@
 "typescript.preferences.importModuleSpecifier" = "non-relative"
 "javascript.preferences.importModuleSpecifier" = "non-relative"
 "claudeCode.preferredLocation" = "sidebar"
+"[prisma]" = { "editor.defaultFormatter" = "prisma.prisma" }
 
 [vscode.personal]
-"[prisma]" = { "editor.defaultFormatter" = "prisma.prisma" }
 
 [vscode.work]
