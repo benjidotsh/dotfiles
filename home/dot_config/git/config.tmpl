@@ -4,12 +4,6 @@
 [commit]
 	gpgSign = true
 
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	process = git-lfs filter-process
-	required = true
-	smudge = git-lfs smudge -- %f
-
 [gpg]
 	format = ssh
 
@@ -32,7 +26,8 @@
 	email = benji.janssens@gmail.com
 	name = Benjamin Janssens
 	signingKey = ~/.ssh/id_ed25519.pub
-{{ if eq .profile "work" }}
+
+{{ if eq .profile "work" -}}
 [includeIf "gitdir:~/DPG/"]
 	path = ~/DPG/.ssh/.gitconfig
 {{ end -}}
