@@ -1,15 +1,4 @@
 {{- $profile := promptChoiceOnce . "profile" "Profile" (list "personal" "work") -}}
-{{- $personalPublicKey := promptStringOnce . "onepassword.personalPublicKey" "1Password reference for personal SSH public key" -}}
-{{- $workPublicKey := "" -}}
-{{- if eq $profile "work" -}}
-{{- $workPublicKey = promptStringOnce . "onepassword.workPublicKey" "1Password reference for work SSH public key" -}}
-{{- end -}}
 
 [data]
 profile = {{ $profile | quote }}
-
-[data.onepassword]
-personalPublicKey = {{ $personalPublicKey | quote }}
-{{ if eq $profile "work" -}}
-workPublicKey = {{ $workPublicKey | quote }}
-{{ end -}}
