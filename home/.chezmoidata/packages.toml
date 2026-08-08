@@ -71,6 +71,7 @@ vscode = [
   "antyos.openscad",
   "bradlc.vscode-tailwindcss",
   "platformio.platformio-ide",
+  "ms-vscode.cpptools",
 ]
 
 [packages.work]
