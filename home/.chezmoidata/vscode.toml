@@ -1,4 +1,4 @@
-[vscode.settings]
+[vscode.common]
 "workbench.startupEditor" = "none"
 "security.workspace.trust.enabled" = false
 "editor.fontFamily" = "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace"
@@ -19,7 +19,3 @@
 "javascript.preferences.importModuleSpecifier" = "non-relative"
 "claudeCode.preferredLocation" = "sidebar"
 "[prisma]" = { "editor.defaultFormatter" = "prisma.prisma" }
-
-[vscode.personal]
-
-[vscode.work]

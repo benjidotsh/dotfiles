@@ -1,1 +1,1 @@
-{{ toPrettyJson (mergeOverwrite (deepCopy .vscode.settings) (index .vscode .profile)) }}
+{{ toPrettyJson (mergeOverwrite (deepCopy .vscode.common) (index .vscode .profile | default (dict))) }}

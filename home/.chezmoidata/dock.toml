@@ -1,5 +1,5 @@
-[dock]
-personal = [
+[dock.personal]
+apps = [
   "/System/Applications/Apps.app",
   "/Applications/Helium.app",
   "/Applications/Discord.app",
@@ -7,7 +7,9 @@ personal = [
   "/Applications/Ghostty.app",
   "/Applications/Visual Studio Code.app",
 ]
-work = [
+
+[dock.work]
+apps = [
   "/System/Applications/Apps.app",
   "/Applications/Helium.app",
   "/Applications/Slack.app",

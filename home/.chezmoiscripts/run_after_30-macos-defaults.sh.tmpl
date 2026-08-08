@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+{{ range $domain, $keys := .macos.defaults -}}
+{{ range $key, $value := $keys -}}
+{{ $type := "string" -}}
+{{ if eq (kindOf $value) "bool" }}{{ $type = "bool" }}{{ else if eq (kindOf $value) "int64" }}{{ $type = "int" }}{{ end -}}
+defaults write {{ $domain | quote }} {{ $key | quote }} -{{ $type }} {{ $value | quote }}
+{{ end -}}
+{{ end -}}

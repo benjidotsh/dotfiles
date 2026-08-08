@@ -1,5 +1,16 @@
-{{ template "Brewfile/taps" . }}
-{{ template "Brewfile/formulae" . }}
-{{ template "Brewfile/casks" . }}
-{{ template "Brewfile/mas" . }}
-{{ template "Brewfile/vscode" . -}}
+{{- $extra := index .packages .profile -}}
+{{ range concat .packages.common.taps $extra.taps -}}
+tap "{{ . }}"
+{{ end }}
+{{ range concat .packages.common.formulae $extra.formulae -}}
+brew "{{ . }}"
+{{ end }}
+{{ range concat .packages.common.casks $extra.casks -}}
+cask "{{ . }}"
+{{ end }}
+{{ range concat .packages.common.mas $extra.mas -}}
+mas "{{ .name }}", id: {{ .id }}
+{{ end }}
+{{ range concat .packages.common.vscode $extra.vscode -}}
+vscode "{{ . }}"
+{{ end -}}

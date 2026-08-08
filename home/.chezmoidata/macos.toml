@@ -1,0 +1,26 @@
+[macos.defaults."com.apple.dock"]
+show-recents = false
+appswitcher-all-displays = true
+minimize-to-application = false
+mineffect = "genie"
+wvous-br-corner = 1
+tilesize = 64
+# Enables the App Expose trackpad gesture.
+showAppExposeGestureEnabled = 1
+
+[macos.defaults.NSGlobalDomain]
+NSAutomaticSpellingCorrectionEnabled = false
+AppleInterfaceStyle = "Dark"
+
+[macos.defaults."com.apple.finder"]
+# Search the current folder by default.
+FXDefaultSearchScope = "SCcf"
+
+# Avoid .DS_Store files on network and removable volumes. macOS applies these
+# Desktop Services settings fully after logout/login.
+[macos.defaults."com.apple.desktopservices"]
+DSDontWriteNetworkStores = true
+DSDontWriteUSBStores = true
+
+[macos.defaults."com.apple.menuextra.clock"]
+ShowSeconds = true

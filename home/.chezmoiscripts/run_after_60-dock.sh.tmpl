@@ -4,7 +4,7 @@ set -eu
 dockutil=/opt/homebrew/bin/dockutil
 
 "$dockutil" --remove all --no-restart
-{{ range index .dock .profile -}}
+{{ range (index .dock .profile).apps -}}
 "$dockutil" --add {{ . | quote }} --no-restart
 {{ end -}}
 "$dockutil" --add "$HOME/Downloads" --display folder --no-restart
