@@ -1,0 +1,27 @@
+[system."com.apple.dock"]
+show-recents = false
+appswitcher-all-displays = true
+minimize-to-application = false
+mineffect = "genie"
+# Disables the bottom-right hot corner (1 = no action).
+wvous-br-corner = 1
+tilesize = 64
+# Enables the App Expose trackpad gesture.
+showAppExposeGestureEnabled = 1
+
+[system.NSGlobalDomain]
+NSAutomaticSpellingCorrectionEnabled = false
+AppleInterfaceStyle = "Dark"
+
+[system."com.apple.finder"]
+# Search the current folder by default.
+FXDefaultSearchScope = "SCcf"
+
+# Avoid .DS_Store files on network and removable volumes. macOS applies these
+# Desktop Services settings fully after logout/login.
+[system."com.apple.desktopservices"]
+DSDontWriteNetworkStores = true
+DSDontWriteUSBStores = true
+
+[system."com.apple.menuextra.clock"]
+ShowSeconds = true

@@ -1,0 +1,22 @@
+[dock.personal]
+apps = [
+  "/System/Applications/Apps.app",
+  "/Applications/Helium.app",
+  "/Applications/Discord.app",
+  "/Applications/Spotify.app",
+  "/Applications/Ghostty.app",
+  "/Applications/Visual Studio Code.app",
+]
+folders = ["$HOME/Downloads"]
+
+[dock.work]
+apps = [
+  "/System/Applications/Apps.app",
+  "/Applications/Helium.app",
+  "/Applications/Slack.app",
+  "/Applications/Discord.app",
+  "/Applications/Spotify.app",
+  "/Applications/Ghostty.app",
+  "/Applications/Visual Studio Code.app",
+]
+folders = ["$HOME/Downloads"]

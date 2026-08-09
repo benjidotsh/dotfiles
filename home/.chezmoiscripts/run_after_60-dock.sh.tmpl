@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+dockutil=/opt/homebrew/bin/dockutil
+
+"$dockutil" --remove all --no-restart
+{{ range (index .dock .profile).apps -}}
+"$dockutil" --add {{ . | quote }} --no-restart
+{{ end -}}
+{{ range (index .dock .profile).folders -}}
+"$dockutil" --add "{{ . }}" --display folder --no-restart
+{{ end -}}
+/usr/bin/killall Dock

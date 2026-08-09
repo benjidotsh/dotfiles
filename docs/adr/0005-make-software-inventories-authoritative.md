@@ -1,0 +1,3 @@
+# Make software inventories authoritative
+
+Treat each profile's Homebrew Bundle software and VS Code extensions as authoritative sets: install and upgrade declared members, then remove undeclared managed members during convergence. Use cask `zap` during cleanup despite its ability to remove preferences, caches, and support data; this destructive cleanup is intentional. VS Code extensions remain mutable at runtime but drift is removed on the next apply, so settings synchronization must not independently own extensions. The routine `chezmoi update` operation updates both Homebrew software and existing VS Code extensions.

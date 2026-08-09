@@ -1,0 +1,109 @@
+[packages.common]
+taps = []
+formulae = [
+  "chezmoi",
+  "dockutil",
+  "fileicon",
+  "folderify",
+  "gh",
+  "herdr",
+  "mas",
+  "starship",
+  "volta",
+  "zsh-autosuggestions",
+  "zsh-syntax-highlighting",
+]
+casks = [
+  "1password",
+  "1password-cli",
+  "chatgpt",
+  "codex",
+  "claude",
+  "claude-code",
+  "discord",
+  "font-meslo-lg-nerd-font",
+  "ghostty",
+  "monitorcontrol",
+  "spotify",
+  "visual-studio-code",
+  "helium-browser",
+]
+mas = [
+  { name = "The Unarchiver", id = 425424353 },
+  { name = "Boop", id = 1518425043 },
+  { name = "Xcode", id = 497799835 },
+]
+vscode = [
+  "anthropic.claude-code",
+  "bierner.markdown-mermaid",
+  "catppuccin.catppuccin-vsc",
+  "catppuccin.catppuccin-vsc-icons",
+  "dbaeumer.vscode-eslint",
+  "eamodio.gitlens",
+  "esbenp.prettier-vscode",
+  "openai.chatgpt",
+  "prisma.prisma",
+]
+
+[packages.personal]
+taps = ["oven-sh/bun"]
+formulae = [
+  "oven-sh/bun/bun",
+  "watchman",
+  "cocoapods",
+]
+casks = [
+  "adobe-acrobat-reader",
+  "android-commandlinetools",
+  "android-studio",
+  "autodesk-fusion",
+  "bambu-studio",
+  "beid-token",
+  "iina",
+  "openscad@snapshot",
+  "orbstack",
+  "steam",
+  "stremio",
+  "zulu@17",
+]
+mas = []
+vscode = [
+  "antyos.openscad",
+  "bradlc.vscode-tailwindcss",
+  "platformio.platformio-ide",
+  "ms-vscode.cpptools",
+]
+
+[packages.work]
+taps = [
+  "hashicorp/tap",
+  "benjidotsh/tap",
+]
+formulae = [
+  "aws-sam-cli",
+  "awscli",
+  "azure-cli",
+  "go",
+  "hashicorp/tap/terraform",
+  "sops",
+  "valkey",
+  "direnv",
+]
+casks = [
+  "benjidotsh/tap/cloud-app",
+  "dbeaver-community",
+  "docker-desktop",
+  "httpie-desktop",
+  "nosql-workbench",
+  "postgres-app",
+  "session-manager-plugin",
+  "copilot-cli",
+]
+mas = [
+  { name = "Slack", id = 803453959 },
+  { name = "Hidden Bar", id = 1452453066 },
+]
+vscode = [
+  "golang.go",
+  "hashicorp.terraform",
+]

@@ -1,0 +1,8 @@
+- Don’t maintain backward compatibility by default. Remove obsolete code paths instead of piling on compatibility layers, migrations, and fallbacks.
+- Use the simplest implementation that satisfies today’s requirements. Avoid speculative abstractions, excessive configurability, and unnecessary indirection.
+- Build incrementally from a working end-to-end system. Add capabilities layer by layer; don’t sacrifice something that works for unfinished complexity.
+- Keep things modular. Separate components and responsibilities clearly.
+- Prefer mature, maintained libraries when they reduce complexity or improve reliability; don’t reinvent standard functionality without a good reason.
+- Use what the project already depends on first. Before implementing something yourself or adding a dependency, check the existing libraries’ documentation and types.
+- Make architecture choices that can last. Avoid knowingly temporary stopgaps that are intended to be replaced later.
+- Before designing a solution, study how established products already solve the problem. Prefer their proven patterns and conventions instead of inventing a completely new approach.

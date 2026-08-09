@@ -1,0 +1,3 @@
+# Target behavioral parity
+
+Recreate the Nix configuration's user-visible software and behavior, but do not preserve Nix's pinned dependency graph, atomic generations, or whole-system rollback. Chezmoi cannot provide those guarantees; requiring them would prevent it from becoming the replacement. The fresh-machine bootstrap supports only the `personal` and `work` profiles, and treats the current `~/nix` declaration plus its uncommitted `herdr` addition—not unmanaged live-machine state—as the baseline. Installing, migrating, coexisting with, or removing Nix is outside scope. Nix-only editors, extensions, aliases, workflows, garbage collection, and the `just` runner used solely for those workflows are omitted. MCP servers are also omitted from the initial declared state.
