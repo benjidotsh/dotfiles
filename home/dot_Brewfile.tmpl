@@ -1,6 +1,6 @@
 {{- $extra := index .packages .profile -}}
 {{ range concat .packages.common.taps $extra.taps -}}
-tap "{{ . }}"
+tap "{{ . }}", trusted: true
 {{ end }}
 {{ range concat .packages.common.formulae $extra.formulae -}}
 brew "{{ . }}"
