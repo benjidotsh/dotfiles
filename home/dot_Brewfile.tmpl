@@ -1,4 +1,8 @@
 {{- $extra := index .packages .profile -}}
+{{ if eq .profile "work" -}}
+# Homebrew strips NODE_EXTRA_CA_CERTS
+ENV["NODE_EXTRA_CA_CERTS"] = "#{Dir.home}/.zcli/zscaler_root.pem"
+{{ end -}}
 {{ range concat .packages.common.taps $extra.taps -}}
 tap "{{ . }}", trusted: true
 {{ end }}
