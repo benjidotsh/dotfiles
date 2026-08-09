@@ -1,0 +1,9 @@
+[[ssh-keys]]
+item = "Personal"
+vault = "dotfiles"
+
+{{ if eq .profile "work" -}}
+[[ssh-keys]]
+item = "Work"
+vault = "dotfiles"
+{{ end -}}
