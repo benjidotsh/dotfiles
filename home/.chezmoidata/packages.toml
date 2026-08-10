@@ -6,6 +6,7 @@ formulae = [
   "fileicon",
   "folderify",
   "gh",
+  "git-lfs",
   "herdr",
   "mas",
   "starship",
