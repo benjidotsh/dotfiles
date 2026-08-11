@@ -93,7 +93,6 @@ formulae = [
 casks = [
   "benjidotsh/tap/cloud-app",
   "dbeaver-community",
-  "docker-desktop",
   "httpie-desktop",
   "nosql-workbench",
   "postgres-app",
