@@ -41,5 +41,5 @@ Work-profile file inputs supplied by enterprise tooling. Declared state may refe
 _Avoid_: Work secrets, managed certificates
 
 **Shell secret**:
-A secret value that must be available automatically as an environment variable in normal shells.
+A secret value automatically exported to commands run from the account's configured shell.
 _Avoid_: Project secret, enterprise environment

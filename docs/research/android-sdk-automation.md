@@ -80,7 +80,7 @@ so the SDK script can follow the Homebrew convergence script.
 [Chezmoi target types](https://www.chezmoi.io/reference/target-types/)
 
 The `ANDROID_HOME` and `PATH` exports live in the personal-profile branch of
-`home/dot_zshrc.tmpl`.
+`home/dot_config/fish/config.fish.tmpl`.
 
 Android documents `ANDROID_HOME` as the SDK installation directory and says
 `ANDROID_SDK_ROOT` is deprecated. It also documents adding SDK tool directories

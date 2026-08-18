@@ -22,8 +22,8 @@ Chezmoi-managed personal computing environment for Apple Silicon macOS.
 
 5. If enabling VS Code Settings Sync, open `Settings Sync: Configure` and
    leave `Extensions` unchecked. The Brewfile is the sole extension owner.
-6. Log out of macOS and back in once. This activates deferred Desktop
-   Services and preference changes.
+6. Log out of macOS and back in once. This activates the Fish login shell,
+   deferred Desktop Services, and preference changes.
 
 Select `personal` or `work` when prompted.
 Never run `chezmoi` as root; focused scripts request `sudo` when required.

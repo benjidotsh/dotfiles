@@ -4,6 +4,7 @@ formulae = [
   "chezmoi",
   "dockutil",
   "fileicon",
+  "fish",
   "folderify",
   "gh",
   "git-lfs",
@@ -11,8 +12,6 @@ formulae = [
   "mas",
   "starship",
   "volta",
-  "zsh-autosuggestions",
-  "zsh-syntax-highlighting",
 ]
 casks = [
   "1password",
