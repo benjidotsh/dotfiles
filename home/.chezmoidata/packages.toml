@@ -19,7 +19,7 @@ casks = [
   "chatgpt",
   "codex",
   "claude",
-  "claude-code",
+  "claude-code@latest",
   "discord",
   "font-meslo-lg-nerd-font",
   "ghostty",

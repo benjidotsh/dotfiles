@@ -1,0 +1,21 @@
+{{- dict
+  "hooks" (dict
+    "SessionStart" (list
+      (dict
+        "matcher" "*"
+        "hooks" (list
+          (dict
+            "type" "command"
+            "command" (printf "bash %s session" (shellQuote (joinPath .chezmoi.homeDir ".claude/hooks/herdr-agent-state.sh")))
+            "timeout" 10
+          )
+        )
+      )
+    )
+  )
+  "outputStyle" "Concise"
+  "skipWorkflowUsageWarning" true
+  "theme" "dark"
+  "tui" "fullscreen"
+  | toPrettyJson
+-}}
