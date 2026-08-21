@@ -15,7 +15,7 @@
 - Apple Silicon macOS only; Homebrew prefix `/opt/homebrew`.
 - **Never run `chezmoi apply` for real during preparation** — only `diff`, `status`, `cat`, `--dry-run`.
 - Nix stays installed and frozen (no `darwin-rebuild switch`) until the documented cutover.
-- The chezmoi source lives in `chezmoi/` (via `.chezmoiroot`), not `home/`, because `home/` is occupied by home-manager modules on this branch.
+- The chezmoi source lives in `home/` (via `.chezmoiroot`); the nix declaration stays in the separate `~/nix` repo, so no directory conflict exists.
 - Single profile: no personal/work prompt (one machine, mixed use). Benji's per-profile conditionals are flattened.
 - v1 Homebrew convergence runs **without** `--force-cleanup --zap`; destructive cleanup is enabled only at cutover (see MIGRATION.md).
 
@@ -34,12 +34,12 @@
 
 ## Software inventory delta (drives `packages.toml`)
 
-- **Declared in nix, kept:** all `homebrew.brews`/`casks`/`masApps` from `modules/apps.nix`, including uncommitted `cloudflared`.
+- **Declared in nix, kept:** all `homebrew.brews`/`casks`/`masApps` from `modules/apps.nix`, including uncommitted `cloudflared`. (`gradle` and `poppler` were later dropped as unused; zap removes them.)
 - **Installed but undeclared (found via `brew bundle dump`):** `imagemagick` — declare it (its deps webp/glib/libheif/harfbuzz/pango follow automatically).
 - **New formulae replacing nixpkgs packages:** `bat`, `bitwarden-cli`, `chezmoi`, `direnv`, `eza`, `fish`, `git-lfs`, `go`, `mas`, `starship`.
 - **New casks:** `bitwarden`, `font-fira-code-nerd-font`, `font-meslo-lg-nerd-font`, `visual-studio-code` (VS Code currently comes from nixpkgs!).
 - **Dropped:** `just` (only served nix workflows), `alejandra`, `nixd`, `nodejs` (volta owns node), `jnoortheen.nix-ide` VS Code extension, `update-flake-lock` GitHub workflow, `nix-sync`/`nix-update` aliases.
-- **VS Code extensions:** union of the nix declaration and `code --list-extensions` (adds copilot pair from nix; keeps installed jupyter/containers/chatgpt extensions), minus nix-ide.
+- **VS Code extensions:** union of the nix declaration and `code --list-extensions` (keeps installed jupyter/containers/chatgpt extensions), minus nix-ide. (The copilot pair was later dropped — Copilot ships built into VS Code.)
 - **Out of scope, survives as plain files:** go-installed tools in `~/go/bin`, volta-managed node/npm/corepack, `~/.zcli`.
 
 ---
@@ -56,14 +56,14 @@
 
 ### Task 2: Dotfiles (fish, git, ssh, starship, ghostty, direnv, bat, gnupg, VS Code)
 
-**Files:** `home/dot_config/fish/config.fish`, `home/dot_config/git/config`, `home/dpg/private_dot_ssh/dot_gitconfig`, `home/private_dot_ssh/config`, `home/private_dot_ssh/id_ed25519.pub`, `home/dpg/private_dot_ssh/id_ed25519.pub`, `home/dot_config/starship.toml`, `home/dot_config/ghostty/config`, `home/dot_config/direnv/direnv.toml`, `home/dot_config/bat/config`, `home/dot_config/bat/themes/Catppuccin Macchiato.tmTheme`, `home/private_dot_gnupg/gpg-agent.conf`, `home/Library/Application Support/Code/User/settings.json`, `home/Library/Application Support/Code/User/mcp.json`.
+**Files:** `home/dot_config/fish/config.fish`, `home/dot_config/git/config`, `home/dpg/private_dot_ssh/dot_gitconfig`, `home/private_dot_ssh/config`, `home/private_dot_ssh/id_ed25519.pub`, `home/dpg/private_dot_ssh/id_ed25519.pub`, `home/dot_config/starship.toml`, `home/dot_config/ghostty/config`, `home/dot_config/direnv/direnv.toml`, `home/dot_config/bat/config`, `home/dot_config/bat/themes/Catppuccin Macchiato.tmTheme`, `home/private_dot_gnupg/gpg-agent.conf`, `home/Library/Application Support/Code/User/settings.json`.
 
 - [x] `config.fish`: brew shellenv; env vars from `home.sessionVariables` (VOLTA_HOME, GOPATH, JAVA_HOME → `/opt/homebrew/opt/openjdk/...`, AWS_CA_BUNDLE, NODE_EXTRA_CA_CERTS, SSL_CERT_FILE, REQUESTS_CA_BUNDLE); paths from `home.sessionPath`; `SSH_AUTH_SOCK` → `~/.bitwarden-ssh-agent.sock` when the socket exists; interactive block: no greeting, `GPG_TTY`, starship init, all zsh aliases translated (eza wrapper with `--icons auto --git --group-directories-first`, git shortcuts, aws/terraform shortcuts, `cat`→bat) minus `nix-sync`/`nix-update`, plus `dot-sync` → `chezmoi update`.
 - [x] git config: rendered `~/.config/git/config` with: LFS filters → plain `git-lfs` (brew), `gpg.format=ssh`, `user.signingKey=~/.ssh/id_ed25519.pub`, keep `[includeIf "gitdir:~/dpg/"]`. Work include adds `user.signingkey=~/dpg/.ssh/id_ed25519.pub`, keeps `core.sshCommand -i ~/dpg/.ssh/id_ed25519` (on-disk key valid until Bitwarden onboarding; then switch to `.pub` + `IdentitiesOnly`).
 - [x] ssh config: current rendered config + `IdentityAgent ~/.bitwarden-ssh-agent.sock` (harmless while socket is absent; on-disk `IdentityFile` still wins).
 - [x] Public keys committed verbatim from `~/.ssh/id_ed25519.pub` and `~/dpg/.ssh/id_ed25519.pub`.
 - [x] starship.toml: rendered file verbatim minus `$nix_shell`; ghostty: `shell-integration = fish`; direnv/bat/gpg-agent.conf ported (drop `enable-ssh-support` — Bitwarden owns SSH); bat theme + `run_onchange` cache rebuild.
-- [x] VS Code `settings.json` minus `nix.*`/`[nix]` keys; `mcp.json` with `context7` via `npx -y @upstash/context7-mcp` (the nix `context7-mcp` wrapper disappears with the store).
+- [x] VS Code `settings.json` minus `nix.*`/`[nix]` keys. (An `mcp.json` with `context7` was planned but later dropped from declared state — MCP server config is left unmanaged.)
 - [x] Verify: `chezmoi --source ~/personal/repos/dotfiles diff` shows only the intended content deltas for existing files.
 
 ### Task 3: Convergence scripts
@@ -83,5 +83,5 @@
 
 ## Self-review notes
 
-- All nix `home.sessionVariables`, `sessionPath`, `shellAliases`, git settings, ssh settings, defaults, dock, Touch ID, fonts, and MAS apps are covered by a task; MCP context7 covered via mcp.json; `programs.eza/bat/go/direnv/gpg` covered by formulae + config files.
+- All nix `home.sessionVariables`, `sessionPath`, `shellAliases`, git settings, ssh settings, defaults, dock, Touch ID, fonts, and MAS apps are covered by a task; MCP config is deliberately unmanaged; `programs.eza/bat/go/direnv/gpg` covered by formulae + config files.
 - Not migrated deliberately: nix GC daemon, flake update workflow, `just`, hostname setting (already set on machine), copilot-in-nix-store extension quirks.

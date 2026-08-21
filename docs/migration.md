@@ -47,7 +47,15 @@ chezmoi over dotfiles).
 5. Live on it for a few days. To roll back: `cd ~/nix && just deploy`
    (`darwin-rebuild switch`) restores the nix-managed state.
 
-## Phase 2 — Bitwarden onboarding
+## Phase 2 — Bitwarden onboarding (COMPLETED 2026-08-21)
+
+Executed as written, with one finding: Bitwarden's import flow can
+silently *generate* a new key instead of importing — verify fingerprints
+against the committed `.pub` files after import. Step 4's optional
+cleanup was taken: on-disk private keys are deleted (keys live only in
+the vault) and the `~/dpg` `sshCommand` flip to `.pub` + `IdentitiesOnly`
+is committed — chezmoi now owns `~/dpg/.ssh/.gitconfig`, so no manual
+edit remains.
 
 1. Open Bitwarden (installed by the Brewfile), sign in, enable the SSH
    agent in Settings.

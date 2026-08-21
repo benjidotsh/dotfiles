@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues and PRDs live in GitHub at `lvthillo/dotfiles`. Use `gh` for all operations. Pass `--repo benjidotsh/dotfiles` when the current checkout cannot infer the repository.
+Issues and PRDs live in GitHub at `lvthillo/dotfiles`. Use `gh` for all operations. Pass `--repo lvthillo/dotfiles` when the current checkout cannot infer the repository.
 
 ## Conventions
 

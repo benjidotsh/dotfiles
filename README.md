@@ -25,6 +25,10 @@ No apply step needs the vault unlocked: public keys are committed and no
 secrets are templated. Never run `chezmoi` as root; focused scripts request
 `sudo` when required.
 
+If you enable VS Code Settings Sync, keep the **Extensions** category
+unchecked: the Brewfile is the sole extension owner, and Homebrew's
+destructive cleanup removes anything Sync reinstalls on every apply.
+
 ## Routine convergence
 
 ```sh

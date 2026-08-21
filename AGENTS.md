@@ -2,7 +2,7 @@
 
 ### Issue tracker
 
-Issues live in GitHub at `benjidotsh/dotfiles`. See `docs/agents/issue-tracker.md`.
+Issues live in GitHub at `lvthillo/dotfiles`. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

@@ -17,5 +17,7 @@ Homebrew convergence script omits `--force-cleanup --zap` until Nix and
 its packages are gone; enabling destructive cleanup afterwards restores
 the authoritative-inventory behavior of ADR 0005. ADRs 0004, 0006, and
 0008's 1Password- and profile-specific mechanics are superseded
-accordingly; the orchestration model (ADR 0002) and Fish login shell
-(ADR 0009) are unchanged.
+accordingly, as are ADR 0002's profile selection and custom-icon
+convergence and ADR 0007's Android SDK maintenance — none are part of
+this baseline. ADR 0002's orchestration model otherwise stands, and the
+Fish login shell (ADR 0009) is unchanged.
