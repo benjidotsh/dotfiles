@@ -1,5 +1,5 @@
 [packages]
-taps = []
+taps = ["cloudsmith-io/cloudsmith-cli"]
 formulae = [
   "act",
   "ansible",
@@ -12,7 +12,7 @@ formulae = [
   "cfn-lint",
   "chezmoi",
   "cloudflared",
-  "cloudsmith-cli",
+  "cloudsmith-io/cloudsmith-cli/cloudsmith-cli",
   "commitizen",
   "direnv",
   "dockutil",
