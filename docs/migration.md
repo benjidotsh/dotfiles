@@ -75,9 +75,18 @@ chezmoi over dotfiles).
      line from `/etc/fstab` (`sudo vifs`).
    - Restore `/etc/zshrc`, `/etc/bashrc`, `/etc/bash.bashrc` from their
      `.backup-before-nix` copies if present.
-3. Fix Homebrew taps: `ls -la /opt/homebrew/Library/Taps` — remove any
-   symlinks into `/nix/store` (they came from nix-homebrew's pinned
-   taps; modern brew uses the JSON API instead).
+3. Repair Homebrew itself. nix-homebrew installed brew as a gitless
+   store snapshot (`brew config` shows ">=4.3.0 (shallow or no git
+   repository)"), which breaks the JSON API, so during Phase 1 the
+   nix-store `Library/Taps` symlink was already replaced with real
+   `homebrew/core` and `homebrew/cask` git taps as a workaround. To get
+   a stock brew: re-run the official installer
+   (`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`,
+   it repairs in place), confirm `brew config` reports a real version,
+   then `brew untap homebrew/core homebrew/cask` to drop the heavyweight
+   git taps in favor of the API. Unset leftovers: a login shell should
+   no longer export `HOMEBREW_REPOSITORY=/opt/homebrew/Library/.homebrew-is-managed-by-nix`
+   (it dies with the nix zsh environment).
 4. Delete the store volume: `sudo diskutil apfs deleteVolume "Nix Store"`
    (~89 GB returns to the container). Reboot.
 5. Archive the `lvthillo/nix` repository.
