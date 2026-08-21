@@ -69,6 +69,10 @@ mas = [
   { name = "The Unarchiver", id = 425424353 },
   { name = "Boop", id = 1518425043 },
   # Stock Apple apps - listed so a future `--force-cleanup --zap` spares them.
+  # Legacy re-registrations of Numbers/Pages (13.2 "Creator Studio" era) that
+  # macOS refuses to remove; declared so cleanup stops fighting them.
+  { name = "Numbers (legacy)", id = 409203825 },
+  { name = "Pages (legacy)", id = 409201541 },
   { name = "iMovie", id = 408981434 },
   { name = "Numbers", id = 361304891 },
   { name = "Pages", id = 361309726 },
