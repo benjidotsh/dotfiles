@@ -1,6 +1,8 @@
 # Dotfiles
 
 Chezmoi-managed personal computing environment for Apple Silicon macOS.
+Forked from [benjidotsh/dotfiles](https://github.com/benjidotsh/dotfiles),
+adapted for a single machine and Bitwarden (see `docs/adr/0010`).
 
 ## Fresh-machine bootstrap
 
@@ -10,23 +12,18 @@ Chezmoi-managed personal computing environment for Apple Silicon macOS.
    ```sh
    sh -c "$(curl -fsLS get.chezmoi.io)" -- \
      -b "$HOME/.local/bin" \
-     init --apply --skip-secrets --purge-binary benjidotsh/dotfiles
+     init --apply --purge-binary lvthillo/dotfiles
    ```
 
-3. Open 1Password and enable both its CLI integration and SSH agent.
-4. Apply the secret-backed state:
-
-   ```sh
-   /opt/homebrew/bin/chezmoi apply
-   ```
-
-5. If enabling VS Code Settings Sync, open `Settings Sync: Configure` and
-   leave `Extensions` unchecked. The Brewfile is the sole extension owner.
-6. Log out of macOS and back in once. This activates the Fish login shell,
+3. Open Bitwarden, sign in, and enable the SSH agent
+   (Settings → SSH agent). Import the personal and work SSH keys into the
+   vault if this is their first Bitwarden machine.
+4. Log out of macOS and back in once. This activates the Fish login shell,
    deferred Desktop Services, and preference changes.
 
-Select `personal` or `work` when prompted.
-Never run `chezmoi` as root; focused scripts request `sudo` when required.
+No apply step needs the vault unlocked: public keys are committed and no
+secrets are templated. Never run `chezmoi` as root; focused scripts request
+`sudo` when required.
 
 ## Routine convergence
 
@@ -34,6 +31,11 @@ Never run `chezmoi` as root; focused scripts request `sudo` when required.
 chezmoi update
 ```
 
-This updates the source state, Homebrew software, VS Code extensions, and the
-personal Android SDK baseline, then repairs managed drift. Use
-`chezmoi apply --skip-secrets` when 1Password is intentionally unavailable.
+This updates the source state and Homebrew software, then repairs managed
+drift. (`dot-sync` is the Fish alias for it.)
+
+## Migrating this machine off Nix
+
+See `docs/migration.md` for the one-time cutover: freezing nix-darwin,
+first apply, Bitwarden onboarding, Nix removal, and enabling Homebrew's
+destructive cleanup afterwards.
