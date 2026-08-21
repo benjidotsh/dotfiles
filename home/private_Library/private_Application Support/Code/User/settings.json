@@ -12,7 +12,6 @@
   "chat.agent.enabled": true,
   "chat.agent.maxRequests": 1000,
   "chat.checkpoints.enabled": true,
-  "chat.customAgentInSubagent.enabled": true,
   "chat.instructionsFilesLocations": {
     ".github/instructions": true
   },
@@ -35,6 +34,7 @@
     "source.fixAll": "explicit"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace",
   "editor.formatOnSave": true,
   "editor.inlineSuggest.edits.allowCodeShifting": "always",
   "editor.inlineSuggest.edits.renderSideBySide": "auto",
