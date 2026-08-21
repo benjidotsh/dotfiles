@@ -1,0 +1,26 @@
+{
+  "inputs": [
+    {
+      "description": "GitHub Personal Access Token",
+      "id": "github_token",
+      "password": true,
+      "type": "promptString"
+    },
+    {
+      "description": "Context7 API Key",
+      "id": "context7_api_key",
+      "password": true,
+      "type": "promptString"
+    }
+  ],
+  "servers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {
+        "CONTEXT7_API_KEY": "${input:context7_api_key}"
+      },
+      "type": "stdio"
+    }
+  }
+}

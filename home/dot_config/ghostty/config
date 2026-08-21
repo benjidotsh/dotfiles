@@ -1,1 +1,16 @@
-theme = Catppuccin Macchiato
+# Font
+font-family = MesloLGS Nerd Font
+font-size = 13
+
+# Window
+window-padding-x = 8
+window-padding-y = 4
+window-decoration = true
+macos-titlebar-style = tabs
+window-save-state = always
+
+# Behavior
+copy-on-select = clipboard
+confirm-close-surface = false
+mouse-hide-while-typing = true
+shell-integration = fish

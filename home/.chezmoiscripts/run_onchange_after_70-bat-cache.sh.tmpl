@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+
+# Rebuild bat's syntax/theme cache when the theme changes.
+# theme hash: {{ include "dot_config/bat/themes/Catppuccin Macchiato.tmTheme" | sha256sum }}
+/opt/homebrew/bin/bat cache --build

@@ -1,0 +1,45 @@
+[alias]
+	amend = commit --amend -m
+	br = branch
+	ca = commit -am
+	cm = commit -m
+	co = checkout
+	dc = diff --cached
+	foreach = submodule foreach
+	st = status
+	update = submodule update --init --recursive
+
+[commit]
+	gpgSign = true
+
+[core]
+	editor = vim
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	process = git-lfs filter-process
+	required = true
+	smudge = git-lfs smudge -- %f
+
+[gpg]
+	format = ssh
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+
+[tag]
+	gpgSign = true
+
+[user]
+	email = lorenz.vanthillo@gmail.com
+	name = Lorenz Vanthillo
+	signingKey = ~/.ssh/id_ed25519.pub
+
+[includeIf "gitdir:~/dpg/"]
+	path = ~/dpg/.ssh/.gitconfig

@@ -1,0 +1,6 @@
+[core]
+	sshCommand = ssh -i ~/dpg/.ssh/id_ed25519
+
+[user]
+	email = lorenz.vanthillo@persgroep.net
+	signingkey = ~/dpg/.ssh/id_ed25519.pub

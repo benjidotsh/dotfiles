@@ -1,27 +1,65 @@
 {
-  "workbench.startupEditor": "none",
-  "security.workspace.trust.enabled": false,
-  "editor.fontFamily": "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace",
-  "editor.tabSize": 2,
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "chat.agent.enabled": true,
+  "chat.agent.maxRequests": 1000,
+  "chat.checkpoints.enabled": true,
+  "chat.customAgentInSubagent.enabled": true,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true
+  },
+  "chat.mcp.gallery.enabled": true,
+  "chat.promptFilesLocations": {
+    ".github/prompts": true
+  },
+  "chat.tools.terminal.autoApprove": {
+    "chmod": false,
+    "chown": false,
+    "del": false,
+    "eval": false,
+    "kill": false,
+    "rm": false,
+    "rmdir": false
+  },
+  "chat.tools.terminal.enableAutoApprove": true,
+  "chat.useAgentSkills": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "prettier.requireConfig": true,
-  "editor.codeActionsOnSave": { "source.fixAll": "explicit" },
-  "gitlens.codeLens.enabled": false,
-  "workbench.colorTheme": "Catppuccin Macchiato",
-  "workbench.iconTheme": "catppuccin-macchiato",
+  "editor.inlineSuggest.edits.allowCodeShifting": "always",
+  "editor.inlineSuggest.edits.renderSideBySide": "auto",
+  "editor.inlineSuggest.minShowDelay": 0,
+  "editor.inlineSuggest.syntaxHighlightingEnabled": true,
+  "github.copilot.chat.agent.autoFix": true,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.copilotDebugCommand.enabled": true,
+  "github.copilot.chat.reviewSelection.enabled": true,
+  "github.copilot.editor.enableCodeActions": true,
   "github.copilot.enable": {
     "*": true,
-    "plaintext": false,
     "markdown": true,
+    "plaintext": false,
     "scminput": false
   },
   "github.copilot.nextEditSuggestions.enabled": true,
-  "chat.agent.maxRequests": 100,
-  "chat.useAgentSkills": true,
-  "github.copilot.chat.claudeAgent.allowDangerouslySkipPermissions": true,
-  "ts.preferences.importModuleSpecifier": "non-relative",
-  "js.preferences.importModuleSpecifier": "non-relative",
-  "claudeCode.preferredLocation": "sidebar",
-  "[prisma]": { "editor.defaultFormatter": "prisma.prisma" }
+  "github.copilot.nextEditSuggestions.fixes": true,
+  "github.copilot.renameSuggestions.triggerAutomatically": true,
+  "gitlens.codeLens.enabled": false,
+  "prettier.requireConfig": true,
+  "security.workspace.trust.enabled": false,
+  "terminal.external.osxExec": "Ghostty.app",
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "workbench.startupEditor": "none"
 }

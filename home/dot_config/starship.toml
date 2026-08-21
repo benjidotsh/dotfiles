@@ -1,85 +1,107 @@
+format = "$directory$git_branch$golang$java$nodejs$python$terraform$aws$cmd_duration$line_break$character"
+palette = "catppuccin_macchiato"
+
 [aws]
 format = "on [$symbol$region]($style) "
-symbol = "  "
+style = "blue"
+symbol = "  "
 
 [buf]
-symbol = " "
+symbol = " "
 
 [c]
-symbol = " "
+symbol = " "
+
+[character]
+error_symbol = "[>](bold red)"
+success_symbol = "[>](bold green)"
 
 [cmake]
-symbol = " "
+symbol = " "
+
+[cmd_duration]
+format = "took [$duration]($style) "
+min_time = 2000
+style = "yellow"
 
 [conda]
-symbol = " "
+symbol = " "
 
 [crystal]
-symbol = " "
+symbol = " "
 
 [dart]
-symbol = " "
+symbol = " "
 
 [directory]
 read_only = " 󰌾"
+style = "bold peach"
+truncate_to_repo = false
+truncation_length = 5
 
 [docker_context]
 disabled = true
-symbol = " "
+symbol = " "
 
 [elixir]
-symbol = " "
+symbol = " "
 
 [elm]
-symbol = " "
+symbol = " "
 
 [fennel]
-symbol = " "
+symbol = " "
 
 [fossil_branch]
-symbol = " "
+symbol = " "
 
 [git_branch]
-symbol = " "
+format = "on [$symbol$branch]($style) "
+style = "bold green"
+symbol = " "
 
 [git_commit]
-tag_symbol = "  "
+tag_symbol = "  "
 
 [git_status]
 disabled = true
 
 [golang]
-symbol = " "
+format = "via [$symbol]($style) "
+style = "teal"
+symbol = " "
 
 [gradle]
-symbol = " "
+symbol = " "
 
 [guix_shell]
-symbol = " "
+symbol = " "
 
 [haskell]
-symbol = " "
+symbol = " "
 
 [haxe]
-symbol = " "
+symbol = " "
 
 [hg_branch]
-symbol = " "
+symbol = " "
 
 [hostname]
-ssh_symbol = " "
+ssh_symbol = " "
 
 [java]
-symbol = " "
+format = "via [$symbol]($style) "
+style = "teal"
+symbol = " "
 
 [julia]
-symbol = " "
+symbol = " "
 
 [kotlin]
-symbol = " "
+symbol = " "
 
 [lua]
-symbol = " "
+symbol = " "
 
 [memory_usage]
 symbol = "󰍛 "
@@ -91,87 +113,129 @@ symbol = "󰔷 "
 symbol = "󰆥 "
 
 [nodejs]
-symbol = " "
+format = "via [$symbol]($style) "
+style = "teal"
+symbol = " "
 
 [ocaml]
-symbol = " "
+symbol = " "
+
+[os]
+disabled = true
 
 [os.symbols]
-AlmaLinux = " "
-Alpaquita = " "
-Alpine = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CachyOS = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-EndeavourOS = " "
-Fedora = " "
-FreeBSD = " "
+AlmaLinux = " "
+Alpaquita = " "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CachyOS = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
 Garuda = "󰛓 "
-Gentoo = " "
+Gentoo = " "
 HardenedBSD = "󰞌 "
 Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-Nobara = " "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+Nobara = " "
 OpenBSD = "󰈺 "
 OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-RedHatEnterprise = " "
-Redhat = " "
+Pop = " "
+Raspbian = " "
+RedHatEnterprise = " "
+Redhat = " "
 Redox = "󰀘 "
-RockyLinux = " "
-SUSE = " "
+RockyLinux = " "
+SUSE = " "
 Solus = "󰠳 "
-Ubuntu = " "
-Unknown = " "
-Void = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
 Windows = "󰍲 "
-openSUSE = " "
+openSUSE = " "
 
 [package]
 symbol = "󰏗 "
 
+[palettes.catppuccin_macchiato]
+base = "#24273a"
+blue = "#8aadf4"
+crust = "#181926"
+flamingo = "#f0c6c6"
+green = "#a6da95"
+lavender = "#b7bdf8"
+mantle = "#1e2030"
+maroon = "#ee99a0"
+mauve = "#c6a0f6"
+overlay0 = "#6e738d"
+overlay1 = "#8087a2"
+overlay2 = "#939ab7"
+peach = "#f5a97f"
+pink = "#f5bde6"
+red = "#ed8796"
+rosewater = "#f4dbd6"
+sapphire = "#7dc4e4"
+sky = "#91d7e3"
+subtext0 = "#a5adcb"
+subtext1 = "#b8c0e0"
+surface0 = "#363a4f"
+surface1 = "#494d64"
+surface2 = "#5b6078"
+teal = "#8bd5ca"
+text = "#cad3f5"
+yellow = "#eed49f"
+
 [perl]
-symbol = " "
+symbol = " "
 
 [php]
-symbol = " "
+symbol = " "
 
 [pijul_channel]
-symbol = " "
+symbol = " "
 
 [python]
-symbol = " "
+format = "via [$symbol]($style) "
+style = "teal"
+symbol = " "
 
 [rlang]
 symbol = "󰟔 "
 
 [ruby]
-symbol = " "
+symbol = " "
 
 [rust]
 symbol = "󱘗 "
 
 [scala]
-symbol = " "
+symbol = " "
 
 [swift]
-symbol = " "
+symbol = " "
+
+[terraform]
+format = "via [$symbol($workspace)]($style) "
+style = "teal"
+
+[username]
+disabled = true
 
 [zig]
-symbol = " "
+symbol = " "

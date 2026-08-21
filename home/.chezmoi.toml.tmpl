@@ -1,4 +1,0 @@
-{{- $profile := promptChoiceOnce . "profile" "Profile" (list "personal" "work") -}}
-
-[data]
-profile = {{ $profile | quote }}
