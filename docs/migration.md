@@ -7,19 +7,45 @@ complete, Nix stays installed but **frozen**: never run
 Homebrew packages this repo declares, and home-manager would fight
 chezmoi over dotfiles).
 
+## Phase 0 — already done (2026-08-21)
+
+- Staged chezmoi v2.72.0 installed at `~/.local/bin/chezmoi` (Homebrew
+  installs the durable copy in Phase 1; delete the staged one after).
+- `~/.config/chezmoi/chezmoi.toml` points `sourceDir` at
+  `~/personal/repos/dotfiles` (keep it checked out on this branch).
+- Dry-run verified: `chezmoi status` shows the expected 23 targets.
+
 ## Phase 1 — take over (reversible)
 
-1. `chezmoi init --apply lvthillo/dotfiles` (or `chezmoi apply` from the
-   local checkout). This overwrites home-manager's dotfile symlinks with
-   real files, installs the Brewfile inventory (including replacements
-   for nixpkgs software: VS Code, fish, starship, eza, bat, go, direnv,
-   fonts, mas), and converges the login shell to Fish.
+1. Register the existing public keys on GitHub as **signing** keys
+   (auth and signing are separate registrations of the same key; new
+   commits sign via SSH after this phase and show Unverified until the
+   keys are registered). Safe to do before the apply.
+   - Personal account (web UI): `pbcopy < ~/.ssh/id_ed25519.pub`, then
+     GitHub → Settings → SSH and GPG keys → New SSH key → Key type:
+     Signing key.
+   - Work account (gh is logged in as lorenz-vanthillo_DPGMEDIA but
+     needs the scope first):
+     `gh auth refresh -h github.com -s admin:ssh_signing_key`, then
+     `gh ssh-key add ~/dpg/.ssh/id_ed25519.pub --type signing --title "dpg signing key"`.
+   - Leave the old GPG key registered so past commits stay verified.
+2. `~/.local/bin/chezmoi apply -v`. This overwrites home-manager's
+   dotfile symlinks with real files, installs the Brewfile inventory
+   (including replacements for nixpkgs software: VS Code, fish,
+   starship, eza, bat, go, direnv, fonts, mas), and converges the login
+   shell to Fish. Expect 10–20 minutes of Homebrew installs.
    - First apply prompts for `sudo` twice: `/etc/shells` + `chsh`, and
      Touch ID PAM.
-2. Log out and back in. Verify: fish + starship prompt, `git pull/push`
-   in a personal and a `~/dpg/` repo, `code`, `ll`/`cat` aliases.
-3. Live on it for a few days. To roll back: `darwin-rebuild switch`
-   restores the nix-managed state.
+3. `rm ~/.local/bin/chezmoi` — Homebrew now owns the durable binary
+   (ADR 0008).
+4. Log out and back in. Verify:
+   - `echo $SHELL` → `/opt/homebrew/bin/fish`, starship prompt renders.
+   - `ssh -T git@github.com` in a personal and a `~/dpg/` repo.
+   - `git commit --allow-empty -m test && git log --show-signature -1`.
+   - `brew bundle check --global` → satisfied.
+   - `ll` / `cat` aliases, `code` opens.
+5. Live on it for a few days. To roll back: `cd ~/nix && just deploy`
+   (`darwin-rebuild switch`) restores the nix-managed state.
 
 ## Phase 2 — Bitwarden onboarding
 
