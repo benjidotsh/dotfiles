@@ -61,7 +61,18 @@ chezmoi over dotfiles).
    private keys and change `~/dpg/.ssh/.gitconfig`'s `sshCommand` to
    `ssh -i ~/dpg/.ssh/id_ed25519.pub -o IdentitiesOnly=yes`.
 
-## Phase 3 — remove Nix
+## Phase 3 — remove Nix (COMPLETED 2026-08-21)
+
+Executed as written below, with two findings worth keeping: newer
+nix-darwin requires running the uninstaller as root, and root needs the
+user's Zscaler CA to download — running the already-built store path
+directly avoids the network. Bigger: nix-homebrew had installed the
+`brew` machinery itself as nix-store symlinks, so deleting the store
+volume killed `brew` — the official installer re-run (step 3 below)
+restored it with all Cellar/Casks intact, and `homebrew/core` +
+`homebrew/cask` git taps were untapped afterwards in favor of the API.
+The darwin-uninstaller also empties `/etc/pam.d/sudo_local`; the next
+`chezmoi apply` restores Touch ID sudo.
 
 1. `nix run nix-darwin#darwin-uninstaller` — removes nix-darwin's launch
    daemons (`org.nixos.activate-system`, `darwin-store`, `nix-gc`) and
