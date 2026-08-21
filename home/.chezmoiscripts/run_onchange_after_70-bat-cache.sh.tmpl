@@ -1,6 +1,7 @@
 #!/bin/sh
 set -eu
 
-# Rebuild bat's syntax/theme cache when the theme changes.
+# Rebuild bat's syntax/theme cache when the theme or bat version changes.
 # theme hash: {{ include "dot_config/bat/themes/Catppuccin Macchiato.tmTheme" | sha256sum }}
+# bat version: {{ if stat "/opt/homebrew/bin/bat" }}{{ output "/opt/homebrew/bin/bat" "--version" }}{{ end }}
 /opt/homebrew/bin/bat cache --build
