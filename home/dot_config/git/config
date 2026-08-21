@@ -1,12 +1,7 @@
 [alias]
 	amend = commit --amend -m
-	br = branch
-	ca = commit -am
-	cm = commit -m
-	co = checkout
 	dc = diff --cached
 	foreach = submodule foreach
-	st = status
 	update = submodule update --init --recursive
 
 [commit]
