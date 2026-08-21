@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": {{ printf "bash %s session" (shellQuote (joinPath .chezmoi.homeDir ".claude/hooks/herdr-agent-state.sh")) | toJson }},
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "outputStyle": "Concise",
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark"
+}
