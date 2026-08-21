@@ -26,6 +26,7 @@ formulae = [
   "go",
   "goreleaser",
   "hugo",
+  "imagemagick",
   "jfrog-cli",
   "ko",
   "make",
