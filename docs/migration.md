@@ -102,7 +102,11 @@ The darwin-uninstaller also empties `/etc/pam.d/sudo_local`; the next
    (~89 GB returns to the container). Reboot.
 5. Archive the `lvthillo/nix` repository.
 
-## Phase 4 — enable destructive cleanup
+## Phase 4 — enable destructive cleanup (COMPLETED 2026-08-21)
+
+Enabled the same day: nix removal left a verified-clean inventory, so
+there was no reason to wait. The first zap apply removes the stale
+`postgres-unofficial` cask and `just`.
 
 After a clean `brew bundle check` and a few quiet days, restore
 authoritative-inventory behavior in
