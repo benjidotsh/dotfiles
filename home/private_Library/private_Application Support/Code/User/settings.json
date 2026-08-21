@@ -1,0 +1,36 @@
+{
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file"
+  },
+  "chat.agent.maxRequests": 1000,
+  "chat.mcp.gallery.enabled": true,
+  "chat.useAgentSkills": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace",
+  "editor.formatOnSave": true,
+  "github.copilot.chat.agent.autoFix": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "plaintext": false,
+    "scminput": false
+  },
+  "gitlens.codeLens.enabled": false,
+  "prettier.requireConfig": true,
+  "security.workspace.trust.enabled": false,
+  "terminal.external.osxExec": "Ghostty.app",
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "workbench.startupEditor": "none"
+}

@@ -1,20 +1,17 @@
-{{- $extra := index .packages .profile -}}
-{{ if eq .profile "work" -}}
 # Homebrew strips NODE_EXTRA_CA_CERTS
 ENV["NODE_EXTRA_CA_CERTS"] = "#{Dir.home}/.zcli/zscaler_root.pem"
-{{ end -}}
-{{ range concat .packages.common.taps $extra.taps -}}
+{{ range .packages.taps -}}
 tap "{{ . }}", trusted: true
 {{ end }}
-{{ range concat .packages.common.formulae $extra.formulae -}}
+{{ range .packages.formulae -}}
 brew "{{ . }}"
 {{ end }}
-{{ range concat .packages.common.casks $extra.casks -}}
+{{ range .packages.casks -}}
 cask "{{ . }}"
 {{ end }}
-{{ range concat .packages.common.mas $extra.mas -}}
+{{ range .packages.mas -}}
 mas "{{ .name }}", id: {{ .id }}
 {{ end }}
-{{ range concat .packages.common.vscode $extra.vscode -}}
+{{ range .packages.vscode -}}
 vscode "{{ . }}"
 {{ end -}}

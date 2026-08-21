@@ -1,0 +1,6 @@
+Host *
+  AddKeysToAgent yes
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/id_ed25519
+  UseKeychain yes
+  IdentityAgent ~/.bitwarden-ssh-agent.sock

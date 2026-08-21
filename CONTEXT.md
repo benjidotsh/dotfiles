@@ -1,6 +1,6 @@
 # Dotfiles
 
-The desired personal-computing environment shared across supported machines.
+The desired personal-computing environment for a single Apple Silicon machine that mixes personal and work use.
 
 ## Language
 
@@ -12,10 +12,6 @@ _Avoid_: Exact parity, full Nix parity
 The intended environment explicitly represented by the source configuration. Unmanaged live-machine state is outside it.
 _Avoid_: Live state, current machine state
 
-**Profile**:
-One of the two supported variants of declared state: `personal` or `work`. A profile is independent of machine hostname and local username.
-_Avoid_: Host, machine type, `test`
-
 **Fresh-machine bootstrap**:
 Application of declared state to an Apple Silicon macOS machine without Nix. Migrating, coexisting with, or removing Nix is outside its boundary.
 _Avoid_: Cutover, Nix migration
@@ -25,7 +21,7 @@ A required human step between the initial non-secret apply and full convergence.
 _Avoid_: Installation step, automated setup
 
 **Convergence**:
-Repair of managed configuration drift, including restoration of the profile's authoritative Dock layout, whenever declared state is applied.
+Repair of managed configuration drift, including restoration of the authoritative Dock layout, whenever declared state is applied.
 _Avoid_: One-time setup
 
 **Authoritative set**:
@@ -33,11 +29,11 @@ A declared collection whose undeclared managed members are removed during conver
 _Avoid_: Immutable set, preferred set
 
 **Work repository**:
-A Git repository located beneath `~/DPG/`. It uses the work Git identity and its designated work SSH key.
+A Git repository located beneath `~/dpg/`. It uses the work Git identity and its designated work SSH key.
 _Avoid_: DPG folder, company repo
 
 **Enterprise environment**:
-Work-profile file inputs supplied by enterprise tooling. Declared state may reference their paths but does not own or validate their contents.
+Work-scoped file inputs supplied by enterprise tooling. Declared state may reference their paths but does not own or validate their contents.
 _Avoid_: Work secrets, managed certificates
 
 **Shell secret**:

@@ -1,20 +1,23 @@
 [alias]
-	amend = commit --amend
+	amend = commit --amend -m
+	dc = diff --cached
+	foreach = submodule foreach
+	update = submodule update --init --recursive
 
 [commit]
 	gpgSign = true
 
+[core]
+	editor = vim
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+	smudge = git-lfs smudge -- %f
 
 [gpg]
 	format = ssh
-
-[gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 
 [init]
 	defaultBranch = main
@@ -29,11 +32,9 @@
 	gpgSign = true
 
 [user]
-	email = benji.janssens@gmail.com
-	name = Benjamin Janssens
+	email = lorenz.vanthillo@gmail.com
+	name = Lorenz Vanthillo
 	signingKey = ~/.ssh/id_ed25519.pub
 
-{{ if eq .profile "work" -}}
-[includeIf "gitdir:~/DPG/"]
-	path = ~/DPG/.gitconfig
-{{ end -}}
+[includeIf "gitdir:~/dpg/"]
+	path = ~/dpg/.ssh/.gitconfig

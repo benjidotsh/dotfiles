@@ -1,4 +1,0 @@
-{{ if eq .profile "personal" -}}
-DPG
-.config/direnv
-{{ end -}}
