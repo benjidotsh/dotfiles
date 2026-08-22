@@ -1,4 +1,6 @@
 {{ if eq .profile "personal" -}}
 DPG
 .config/direnv
+.config/abr.applescript
+.config/fish/functions/abr.fish
 {{ end -}}
