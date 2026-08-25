@@ -1,7 +1,2 @@
-.claude/CLAUDE.md
-.claude/output-styles/terse.md
-.claude/settings.json
-.codex/AGENTS.md
-.config/dotfiles/secrets
 .zprofile
 .zshrc
