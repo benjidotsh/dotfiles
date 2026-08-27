@@ -13,6 +13,9 @@ manifest='
 {{- if kindIs "string" $members }}
 {{-   fail (printf "skills manifest: source %q must list explicit skill names" $source) }}
 {{- end }}
+{{- if has "*" $members }}
+{{-   fail (printf "skills manifest: source %q must list explicit skill names" $source) }}
+{{- end }}
 {{ $source }} {{ join " " $members }}
 {{- end }}'
 
