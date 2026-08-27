@@ -1,0 +1,35 @@
+# Authoritative set: undeclared managed skills are pruned on apply. A source
+# mapped to "*" follows upstream membership; a listed source is strictly
+# manifest-controlled.
+[skills]
+"ayghri/i-have-adhd" = ["i-have-adhd"]
+"backstage.io" = ["mui-to-bui-migration"]
+"cursor/plugins" = ["unslop"]
+"mattpocock/skills" = [
+  "ask-matt",
+  "code-review",
+  "codebase-design",
+  "diagnosing-bugs",
+  "domain-modeling",
+  "grill-me",
+  "grill-with-docs",
+  "grilling",
+  "handoff",
+  "implement",
+  "implement-spec",
+  "improve-codebase-architecture",
+  "prototype",
+  "research",
+  "resolving-merge-conflicts",
+  "setup-matt-pocock-skills",
+  "tdd",
+  "teach",
+  "to-questionnaire",
+  "to-spec",
+  "to-tickets",
+  "triage",
+  "wait-what",
+  "wayfinder",
+  "wizard",
+  "writing-for-agents",
+]
