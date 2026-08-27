@@ -3,31 +3,22 @@ set -eu
 
 skills=/opt/homebrew/bin/skills
 
-# "<source> <member>" per line; a "*" member marks a source whose membership
-# follows upstream.
+# One "<source> <members...>" line per source; a "*" member list marks a
+# source whose membership follows upstream.
 manifest='
 {{- range $source, $members := .skills }}
-{{- if kindIs "string" $members }}
-{{ $source }} {{ $members }}
-{{- else }}
-{{- range $members }}
-{{ $source }} {{ . }}
-{{- end }}
-{{- end }}
+{{ $source }} {{ if kindIs "string" $members }}{{ $members }}{{ else }}{{ join " " $members }}{{ end }}
 {{- end }}'
 
 # The CLI prints spinners and ANSI noise even when piped; keep converged
-# applies silent and surface the log only on failure.
+# applies silent and surface the output only on failure. /dev/null stdin stops
+# the CLI from swallowing the manifest here-doc that feeds the loop below.
 run_logged() {
-  log=$(mktemp)
-  if "$@" >"$log" 2>&1; then
-    rm -f "$log"
-  else
+  out=$("$@" </dev/null 2>&1) || {
     status=$?
-    cat "$log" >&2
-    rm -f "$log"
+    printf '%s\n' "$out" >&2
     exit "$status"
-  fi
+  }
 }
 
 # Well-known sources (bare hosts like backstage.io) are recorded bare in the
@@ -39,52 +30,67 @@ source_url() {
   esac
 }
 
-# "<source> <name>" per installed global skill; [] (so no output) on a fresh
-# machine where not even the lockfile exists yet.
-installed() {
-  "$skills" ls --global --json | /usr/bin/python3 -c '
-import json, sys
-for skill in json.load(sys.stdin):
-    print(skill["source"], skill["name"])'
-}
-
 # `skills add --list` has no JSON mode: names sit in a box-drawing frame,
 # indented four spaces (descriptions six) under an "Available Skills" heading.
 # The C locale keeps BSD tr byte-wise and stops BSD awk rejecting the invalid
 # UTF-8 remnants that byte-wise stripping leaves behind.
-upstream_members() {
-  "$skills" add "$(source_url "$1")" --list |
-    sed "s/$(printf '\033')\\[[0-9;]*m//g" |
+parse_listing() {
+  sed "s/$(printf '\033')\\[[0-9;]*m//g" |
     LC_ALL=C tr -d '\342\224\202' |
     LC_ALL=C awk '/Available Skills/ { in_list = 1; next }
       in_list && /^    [^ ]+ *$/ { print $1 }'
 }
 
-installed_pairs=$(installed)
+# A wildcard source whose upstream membership cannot be determined must
+# neither mass-prune nor abort the apply: keep its installed members declared
+# and move on to the other sources.
+keep_installed() {
+  declared_names="$declared_names$(printf '%s\n' "$installed_pairs" |
+    awk -v s="$1" '$1 == s { print $2 }')
+"
+}
+
+# "<source> <name>" per installed global skill; [] (so no output) on a fresh
+# machine where not even the lockfile exists yet.
+installed_pairs=$("$skills" ls --global --json | /usr/bin/python3 -c '
+import json, sys
+for skill in json.load(sys.stdin):
+    print(skill["source"], skill["name"])')
+
 declared_names=''
 
-for source in $(printf '%s\n' "$manifest" | awk 'NF { print $1 }' | sort -u); do
-  members=$(printf '%s\n' "$manifest" | awk -v s="$source" '$1 == s { print $2 }')
+while read -r source members; do
+  [ -n "$source" ] || continue
+
   if [ "$members" = '*' ]; then
-    members=$(upstream_members "$source")
-    # An empty listing is far more likely a network or parsing regression than
-    # a source that deleted its every skill; it must neither mass-prune nor
-    # abort the apply, so keep this source's installed members declared and
-    # move on to the other sources.
+    if ! listing=$("$skills" add "$(source_url "$source")" --list </dev/null 2>&1); then
+      echo "skills: listing $source failed; skipping it this run" >&2
+      keep_installed "$source"
+      continue
+    fi
+    members=$(printf '%s\n' "$listing" | parse_listing)
     if [ -z "$members" ]; then
-      echo "skills: no upstream skills listed for $source; skipping it this run" >&2
-      declared_names="$declared_names$(printf '%s\n' "$installed_pairs" | awk -v s="$source" '$1 == s { print $2 }')
-"
+      echo "skills: nothing parsed from the $source listing (format change?); skipping it this run" >&2
+      keep_installed "$source"
       continue
     fi
   fi
 
-  missing=''
-  for name in $members; do
-    declared_names="$declared_names$name
+  # shellcheck disable=SC2086
+  declared_names="$declared_names$(printf '%s\n' $members)
 "
-    printf '%s\n' "$installed_pairs" | grep -qxF "$source $name" || missing="$missing $name"
-  done
+  # The multi-line sets travel as environment variables: BSD awk -v rejects
+  # values containing newlines.
+  # shellcheck disable=SC2086
+  missing=$(printf '%s\n' $members | pairs="$installed_pairs" awk -v s="$source" '
+    BEGIN {
+      n = split(ENVIRON["pairs"], line, "\n")
+      for (i = 1; i <= n; i++) {
+        split(line[i], f, " ")
+        if (f[1] == s) seen[f[2]]
+      }
+    }
+    !($0 in seen) { printf " %s", $0 }')
 
   if [ -n "$missing" ]; then
     echo "skills: installing$missing from $source"
@@ -95,20 +101,25 @@ for source in $(printf '%s\n' "$manifest" | awk 'NF { print $1 }' | sort -u); do
     run_logged "$skills" add "$(source_url "$source")" --global --yes \
       --agent claude-code codex --skill $missing
   fi
-done
+done <<EOF
+$manifest
+EOF
 
 run_logged "$skills" update --global --yes
 
-# `skills update` never deletes, so undeclared members (including upstream
-# deletions under a "*" source) must be pruned here. No --agent on remove:
-# that cleans the links from every agent directory. Bare names are the removal
-# identity: the lockfile keys skills by name (one per name), and the install
-# loop's source+name check already reinstalled any declared name that was
-# installed from an undeclared source.
-prune=''
-for name in $(installed | awk '{ print $2 }'); do
-  printf '%s\n' "$declared_names" | grep -qxF "$name" || prune="$prune $name"
-done
+# `skills update` never installs or deletes, and everything the install loop
+# added was declared first, so the pre-install snapshot still decides the
+# prune set. Undeclared members (including upstream deletions under a "*"
+# source) go here; no --agent on remove: that cleans the links from every
+# agent directory. Bare names are the removal identity: the lockfile keys
+# skills by name (one per name), and the install loop's source+name check
+# already reinstalled any declared name installed from an undeclared source.
+prune=$(printf '%s\n' "$installed_pairs" | declared="$declared_names" awk '
+  BEGIN {
+    n = split(ENVIRON["declared"], a, "\n")
+    for (i = 1; i <= n; i++) seen[a[i]]
+  }
+  NF && !($2 in seen) { printf " %s", $2 }')
 
 if [ -n "$prune" ]; then
   # shellcheck disable=SC2086
