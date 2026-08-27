@@ -1,10 +1,13 @@
 #!/bin/sh
-set -eu
+# noglob: the script word-splits unquoted variables on purpose; a stray glob
+# character in the manifest must stay literal instead of matching files.
+set -euf
 
 skills=/opt/homebrew/bin/skills
 
-# One "<source> <members...>" line per source. Membership is strictly
-# manifest-controlled; wildcard sources are rejected at render time.
+# One "<source> <members...>" line per source. Membership must be explicit:
+# a "*" would be expanded by the CLI itself into every upstream skill, so it
+# is rejected before anything runs.
 manifest='
 {{- range $source, $members := .skills }}
 {{- if kindIs "string" $members }}
