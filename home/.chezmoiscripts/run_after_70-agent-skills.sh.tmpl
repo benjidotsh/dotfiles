@@ -32,7 +32,7 @@ run_logged() {
 
 # Well-known sources (bare hosts like backstage.io) are recorded bare in the
 # lockfile, but `skills add` only accepts them as a URL.
-addable() {
+source_url() {
   case $1 in
   */*) printf '%s\n' "$1" ;;
   *) printf 'https://%s\n' "$1" ;;
@@ -53,7 +53,7 @@ for skill in json.load(sys.stdin):
 # The C locale keeps BSD tr byte-wise and stops BSD awk rejecting the invalid
 # UTF-8 remnants that byte-wise stripping leaves behind.
 upstream_members() {
-  "$skills" add "$(addable "$1")" --list |
+  "$skills" add "$(source_url "$1")" --list |
     sed "s/$(printf '\033')\\[[0-9;]*m//g" |
     LC_ALL=C tr -d '\342\224\202' |
     LC_ALL=C awk '/Available Skills/ { in_list = 1; next }
@@ -68,10 +68,14 @@ for source in $(printf '%s\n' "$manifest" | awk 'NF { print $1 }' | sort -u); do
   if [ "$members" = '*' ]; then
     members=$(upstream_members "$source")
     # An empty listing is far more likely a network or parsing regression than
-    # a source that deleted its every skill; refuse to prune on it.
+    # a source that deleted its every skill; it must neither mass-prune nor
+    # abort the apply, so keep this source's installed members declared and
+    # move on to the other sources.
     if [ -z "$members" ]; then
-      echo "skills: no upstream skills listed for $source" >&2
-      exit 1
+      echo "skills: no upstream skills listed for $source; skipping it this run" >&2
+      declared_names="$declared_names$(printf '%s\n' "$installed_pairs" | awk -v s="$source" '$1 == s { print $2 }')
+"
+      continue
     fi
   fi
 
@@ -88,7 +92,7 @@ for source in $(printf '%s\n' "$manifest" | awk 'NF { print $1 }' | sort -u); do
     # bypass the canonical store; codex is what routes content into
     # ~/.agents/skills, with ~/.claude/skills symlinked to it.
     # shellcheck disable=SC2086
-    run_logged "$skills" add "$(addable "$source")" --global --yes \
+    run_logged "$skills" add "$(source_url "$source")" --global --yes \
       --agent claude-code codex --skill $missing
   fi
 done
@@ -97,7 +101,10 @@ run_logged "$skills" update --global --yes
 
 # `skills update` never deletes, so undeclared members (including upstream
 # deletions under a "*" source) must be pruned here. No --agent on remove:
-# that cleans the links from every agent directory.
+# that cleans the links from every agent directory. Bare names are the removal
+# identity: the lockfile keys skills by name (one per name), and the install
+# loop's source+name check already reinstalled any declared name that was
+# installed from an undeclared source.
 prune=''
 for name in $(installed | awk '{ print $2 }'); do
   printf '%s\n' "$declared_names" | grep -qxF "$name" || prune="$prune $name"
