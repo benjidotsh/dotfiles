@@ -1,9 +1,8 @@
-# Authoritative set: undeclared managed skills are pruned on apply. A source
-# mapped to "*" follows upstream membership; a listed source is strictly
-# manifest-controlled.
+# Authoritative set: undeclared managed skills are pruned on apply; membership
+# is strictly manifest-controlled.
 [skills]
 "ayghri/i-have-adhd" = ["i-have-adhd"]
-"backstage.io" = ["mui-to-bui-migration"]
+"backstage/community-plugins" = ["mui-to-bui-migration"]
 "cursor/plugins" = ["unslop"]
 "mattpocock/skills" = [
   "ask-matt",

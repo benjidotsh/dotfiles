@@ -3,11 +3,14 @@ set -eu
 
 skills=/opt/homebrew/bin/skills
 
-# One "<source> <members...>" line per source; a "*" member list marks a
-# source whose membership follows upstream.
+# One "<source> <members...>" line per source. Membership is strictly
+# manifest-controlled; wildcard sources are rejected at render time.
 manifest='
 {{- range $source, $members := .skills }}
-{{ $source }} {{ if kindIs "string" $members }}{{ $members }}{{ else }}{{ join " " $members }}{{ end }}
+{{- if kindIs "string" $members }}
+{{-   fail (printf "skills manifest: source %q must list explicit skill names" $source) }}
+{{- end }}
+{{ $source }} {{ join " " $members }}
 {{- end }}'
 
 # The CLI prints spinners and ANSI noise even when piped; keep converged
@@ -19,35 +22,6 @@ run_logged() {
     printf '%s\n' "$out" >&2
     exit "$status"
   }
-}
-
-# Well-known sources (bare hosts like backstage.io) are recorded bare in the
-# lockfile, but `skills add` only accepts them as a URL.
-source_url() {
-  case $1 in
-  */*) printf '%s\n' "$1" ;;
-  *) printf 'https://%s\n' "$1" ;;
-  esac
-}
-
-# `skills add --list` has no JSON mode: names sit in a box-drawing frame,
-# indented four spaces (descriptions six) under an "Available Skills" heading.
-# The C locale keeps BSD tr byte-wise and stops BSD awk rejecting the invalid
-# UTF-8 remnants that byte-wise stripping leaves behind.
-parse_listing() {
-  sed "s/$(printf '\033')\\[[0-9;]*m//g" |
-    LC_ALL=C tr -d '\342\224\202' |
-    LC_ALL=C awk '/Available Skills/ { in_list = 1; next }
-      in_list && /^    [^ ]+ *$/ { print $1 }'
-}
-
-# A wildcard source whose upstream membership cannot be determined must
-# neither mass-prune nor abort the apply: keep its installed members declared
-# and move on to the other sources.
-keep_installed() {
-  declared_names="$declared_names$(printf '%s\n' "$installed_pairs" |
-    awk -v s="$1" '$1 == s { print $2 }')
-"
 }
 
 # "<source> <name>" per installed global skill; [] (so no output) on a fresh
@@ -62,24 +36,10 @@ declared_names=''
 while read -r source members; do
   [ -n "$source" ] || continue
 
-  if [ "$members" = '*' ]; then
-    if ! listing=$("$skills" add "$(source_url "$source")" --list </dev/null 2>&1); then
-      echo "skills: listing $source failed; skipping it this run" >&2
-      keep_installed "$source"
-      continue
-    fi
-    members=$(printf '%s\n' "$listing" | parse_listing)
-    if [ -z "$members" ]; then
-      echo "skills: nothing parsed from the $source listing (format change?); skipping it this run" >&2
-      keep_installed "$source"
-      continue
-    fi
-  fi
-
   # shellcheck disable=SC2086
   declared_names="$declared_names$(printf '%s\n' $members)
 "
-  # The multi-line sets travel as environment variables: BSD awk -v rejects
+  # The multi-line set travels as an environment variable: BSD awk -v rejects
   # values containing newlines.
   # shellcheck disable=SC2086
   missing=$(printf '%s\n' $members | pairs="$installed_pairs" awk -v s="$source" '
@@ -98,7 +58,7 @@ while read -r source members; do
     # bypass the canonical store; codex is what routes content into
     # ~/.agents/skills, with ~/.claude/skills symlinked to it.
     # shellcheck disable=SC2086
-    run_logged "$skills" add "$(source_url "$source")" --global --yes \
+    run_logged "$skills" add "$source" --global --yes \
       --agent claude-code codex --skill $missing
   fi
 done <<EOF
@@ -109,11 +69,11 @@ run_logged "$skills" update --global --yes
 
 # `skills update` never installs or deletes, and everything the install loop
 # added was declared first, so the pre-install snapshot still decides the
-# prune set. Undeclared members (including upstream deletions under a "*"
-# source) go here; no --agent on remove: that cleans the links from every
-# agent directory. Bare names are the removal identity: the lockfile keys
-# skills by name (one per name), and the install loop's source+name check
-# already reinstalled any declared name installed from an undeclared source.
+# prune set. Undeclared members go here; no --agent on remove: that cleans the
+# links from every agent directory. Bare names are the removal identity: the
+# lockfile keys skills by name (one per name), and the install loop's
+# source+name check already reinstalled any declared name installed from an
+# undeclared source.
 prune=$(printf '%s\n' "$installed_pairs" | declared="$declared_names" awk '
   BEGIN {
     n = split(ENVIRON["declared"], a, "\n")
