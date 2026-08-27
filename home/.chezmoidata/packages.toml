@@ -10,6 +10,7 @@ formulae = [
   "git-lfs",
   "herdr",
   "mas",
+  "skills",
   "starship",
   "volta",
 ]
