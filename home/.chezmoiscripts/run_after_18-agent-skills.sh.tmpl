@@ -1,6 +1,4 @@
-{{- $extra := index .skills .profile -}}
-{{- $agents := concat .skills.common.agents $extra.agents -}}
-{{- $declared := merge (dict) .skills.common.sources $extra.sources -}}
+{{- $declared := merge (dict) .skills.common (index .skills .profile) -}}
 #!/bin/sh
 set -eu
 
@@ -8,5 +6,5 @@ skills=/opt/homebrew/bin/skills
 
 "$skills" remove --all --global --yes
 {{ range $remote, $names := $declared -}}
-"$skills" add {{ $remote | quote }} --global --yes --agent{{ range $agents }} {{ . | quote }}{{ end }} --skill{{ range $names }} {{ . | quote }}{{ end }}
+"$skills" add {{ $remote | quote }} --global --yes --agent "claude-code" "codex" "github-copilot" --skill{{ range $names }} {{ . | quote }}{{ end }}
 {{ end -}}
