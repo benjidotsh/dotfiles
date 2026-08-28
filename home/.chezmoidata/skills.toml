@@ -1,7 +1,7 @@
 [skills.common]
 agents = ["codex", "claude-code"]
 
-[skills.common.skills]
+[skills.common.sources]
 "https://github.com/mattpocock/skills" = [
   "ask-matt",
   "code-review",
@@ -36,10 +36,10 @@ agents = ["codex", "claude-code"]
 [skills.personal]
 agents = []
 
-[skills.personal.skills]
+[skills.personal.sources]
 
 [skills.work]
 agents = ["github-copilot"]
 
-[skills.work.skills]
+[skills.work.sources]
 "https://backstage.io" = ["mui-to-bui-migration"]

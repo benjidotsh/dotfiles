@@ -1,6 +1,6 @@
 {{- $extra := index .skills .profile -}}
 {{- $agents := concat .skills.common.agents $extra.agents -}}
-{{- $declared := merge (dict) .skills.common.skills $extra.skills -}}
+{{- $declared := merge (dict) .skills.common.sources $extra.sources -}}
 #!/bin/sh
 set -eu
 
