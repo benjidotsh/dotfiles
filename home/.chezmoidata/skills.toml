@@ -1,9 +1,8 @@
 [skills.common]
 agents = ["codex", "claude-code"]
 
-[[skills.common.sources]]
-remote = "https://github.com/mattpocock/skills"
-names = [
+[skills.common.skills]
+"https://github.com/mattpocock/skills" = [
   "ask-matt",
   "code-review",
   "codebase-design",
@@ -31,22 +30,16 @@ names = [
   "wizard",
   "writing-for-agents",
 ]
-
-[[skills.common.sources]]
-remote = "https://github.com/ayghri/i-have-adhd"
-names = ["i-have-adhd"]
-
-[[skills.common.sources]]
-remote = "https://github.com/cursor/plugins"
-names = ["unslop"]
+"https://github.com/ayghri/i-have-adhd" = ["i-have-adhd"]
+"https://github.com/cursor/plugins" = ["unslop"]
 
 [skills.personal]
 agents = []
-sources = []
+
+[skills.personal.skills]
 
 [skills.work]
 agents = ["github-copilot"]
 
-[[skills.work.sources]]
-remote = "https://backstage.io"
-names = ["mui-to-bui-migration"]
+[skills.work.skills]
+"https://backstage.io" = ["mui-to-bui-migration"]
