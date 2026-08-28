@@ -1,0 +1,34 @@
+[skills.common]
+"https://github.com/mattpocock/skills" = [
+  "ask-matt",
+  "code-review",
+  "codebase-design",
+  "diagnosing-bugs",
+  "domain-modeling",
+  "grill-me",
+  "grill-with-docs",
+  "grilling",
+  "handoff",
+  "implement",
+  "implement-spec",
+  "improve-codebase-architecture",
+  "prototype",
+  "research",
+  "resolving-merge-conflicts",
+  "setup-matt-pocock-skills",
+  "tdd",
+  "teach",
+  "to-questionnaire",
+  "to-spec",
+  "to-tickets",
+  "triage",
+  "wait-what",
+  "wayfinder",
+  "wizard",
+  "writing-for-agents",
+]
+"https://github.com/ayghri/i-have-adhd" = ["i-have-adhd"]
+"https://github.com/cursor/plugins" = ["unslop"]
+
+[skills.work]
+"https://backstage.io" = ["mui-to-bui-migration"]

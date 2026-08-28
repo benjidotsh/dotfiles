@@ -1,0 +1,10 @@
+{{- $declared := merge (dict) .skills.common (index .skills .profile) -}}
+#!/bin/sh
+set -eu
+
+skills=/opt/homebrew/bin/skills
+
+"$skills" remove --all --global --yes
+{{ range $remote, $names := $declared -}}
+"$skills" add {{ $remote | quote }} --global --yes --agent "claude-code" "codex" "github-copilot" --skill{{ range $names }} {{ . | quote }}{{ end }}
+{{ end -}}
