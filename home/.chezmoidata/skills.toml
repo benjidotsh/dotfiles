@@ -1,0 +1,52 @@
+[skills.common]
+agents = ["codex", "claude-code"]
+
+[[skills.common.sources]]
+remote = "https://github.com/mattpocock/skills"
+names = [
+  "ask-matt",
+  "code-review",
+  "codebase-design",
+  "diagnosing-bugs",
+  "domain-modeling",
+  "grill-me",
+  "grill-with-docs",
+  "grilling",
+  "handoff",
+  "implement",
+  "implement-spec",
+  "improve-codebase-architecture",
+  "prototype",
+  "research",
+  "resolving-merge-conflicts",
+  "setup-matt-pocock-skills",
+  "tdd",
+  "teach",
+  "to-questionnaire",
+  "to-spec",
+  "to-tickets",
+  "triage",
+  "wait-what",
+  "wayfinder",
+  "wizard",
+  "writing-for-agents",
+]
+
+[[skills.common.sources]]
+remote = "https://github.com/ayghri/i-have-adhd"
+names = ["i-have-adhd"]
+
+[[skills.common.sources]]
+remote = "https://github.com/cursor/plugins"
+names = ["unslop"]
+
+[skills.personal]
+agents = []
+sources = []
+
+[skills.work]
+agents = ["github-copilot"]
+
+[[skills.work.sources]]
+remote = "https://backstage.io"
+names = ["mui-to-bui-migration"]

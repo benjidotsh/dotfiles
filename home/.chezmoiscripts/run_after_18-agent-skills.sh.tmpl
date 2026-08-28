@@ -1,0 +1,19 @@
+{{- $extra := index .skills .profile -}}
+{{- $agents := concat .skills.common.agents $extra.agents -}}
+{{- $sources := concat .skills.common.sources $extra.sources -}}
+#!/bin/sh
+set -eu
+
+skills=/opt/homebrew/bin/skills
+
+"$skills" remove --all --global --yes
+# skills add can report a download failure with a zero exit status.
+{{ range $source := $sources -}}
+"$skills" add {{ $source.remote | quote }} --global --yes --agent{{ range $agents }} {{ . | quote }}{{ end }} --skill{{ range $source.names }} {{ . | quote }}{{ end }}
+{{ range $source.names -}}
+if [ ! -f "$HOME/.agents/skills/{{ . }}/SKILL.md" ]; then
+  echo "skills: failed to install {{ . }}" >&2
+  exit 1
+fi
+{{ end -}}
+{{ end -}}
