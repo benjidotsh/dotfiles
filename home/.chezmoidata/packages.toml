@@ -82,8 +82,6 @@ formulae = [
   "aws-sam-cli",
   "awscli",
   "azure-cli",
-  "claude",
-  "claude-code@latest",
   "go",
   "hashicorp/tap/terraform",
   "sops",
@@ -92,6 +90,8 @@ formulae = [
 ]
 casks = [
   "benjidotsh/tap/cloud-app",
+  "claude",
+  "claude-code@latest",
   "dbeaver-community",
   "httpie-desktop",
   "nosql-workbench",
