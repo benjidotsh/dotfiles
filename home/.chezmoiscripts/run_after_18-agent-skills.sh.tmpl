@@ -4,7 +4,22 @@ set -eu
 
 skills=/opt/homebrew/bin/skills
 
-"$skills" remove --all --global --yes
+run_quietly() {
+  failure_message=$1
+  shift
+
+  if "$@" >/dev/null 2>&1; then
+    return 0
+  else
+    command_status=$?
+    printf '%s\n' "$failure_message" >&2
+    return "$command_status"
+  fi
+}
+
+run_quietly "Failed to remove agent skills." "$skills" remove --all --global --yes
 {{ range $remote, $names := $declared -}}
-"$skills" add {{ $remote | quote }} --global --yes --agent "claude-code" "codex" "github-copilot" --skill{{ range $names }} {{ . | quote }}{{ end }}
+run_quietly {{ printf "Failed to add agent skills from %s." $remote | quote }} "$skills" add {{ $remote | quote }} --global --yes --agent "claude-code" "codex" "github-copilot" --skill{{ range $names }} {{ . | quote }}{{ end }}
 {{ end -}}
+
+printf 'Updated %d agent skills.\n' {{ values $declared | toStrings | len }}
