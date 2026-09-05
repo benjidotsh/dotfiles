@@ -1,5 +1,4 @@
 [packages.common]
-taps = []
 formulae = [
   "awscli",
   "chezmoi",
@@ -47,9 +46,8 @@ vscode = [
 ]
 
 [packages.personal]
-taps = ["oven-sh/bun"]
 formulae = [
-  "oven-sh/bun/bun",
+  "bun",
   "watchman",
   "cocoapods",
 ]
@@ -77,10 +75,6 @@ vscode = [
 ]
 
 [packages.work]
-taps = [
-  "hashicorp/tap",
-  "benjidotsh/tap",
-]
 formulae = [
   "aws-sam-cli",
   "azure-cli",

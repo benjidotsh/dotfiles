@@ -3,14 +3,11 @@
 # Homebrew strips NODE_EXTRA_CA_CERTS
 ENV["NODE_EXTRA_CA_CERTS"] = "#{Dir.home}/.zcli/zscaler_root.pem"
 {{ end -}}
-{{ range concat .packages.common.taps $extra.taps -}}
-tap "{{ . }}", trusted: true
-{{ end }}
 {{ range concat .packages.common.formulae $extra.formulae -}}
-brew "{{ . }}"
+brew "{{ . }}", trusted: true
 {{ end }}
 {{ range concat .packages.common.casks $extra.casks -}}
-cask "{{ . }}"
+cask "{{ . }}", trusted: true
 {{ end }}
 {{ range concat .packages.common.mas $extra.mas -}}
 mas "{{ .name }}", id: {{ .id }}
