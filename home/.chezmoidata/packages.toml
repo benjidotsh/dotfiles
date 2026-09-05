@@ -63,6 +63,7 @@ casks = [
   "orbstack",
   "steam",
   "stremio",
+  "unity-hub",
   "zulu@17",
 ]
 mas = []
