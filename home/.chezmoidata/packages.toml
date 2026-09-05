@@ -1,6 +1,7 @@
 [packages.common]
 taps = []
 formulae = [
+  "awscli",
   "chezmoi",
   "dockutil",
   "fileicon",
@@ -18,6 +19,7 @@ casks = [
   "1password",
   "1password-cli",
   "chatgpt",
+  "benjidotsh/tap/cloud-app",
   "codex",
   "discord",
   "font-meslo-lg-nerd-font",
@@ -81,7 +83,6 @@ taps = [
 ]
 formulae = [
   "aws-sam-cli",
-  "awscli",
   "azure-cli",
   "go",
   "hashicorp/tap/terraform",
@@ -90,7 +91,6 @@ formulae = [
   "direnv",
 ]
 casks = [
-  "benjidotsh/tap/cloud-app",
   "claude",
   "claude-code@latest",
   "dbeaver-community",
