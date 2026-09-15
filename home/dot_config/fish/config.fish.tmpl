@@ -12,6 +12,8 @@ set -gx AWS_CA_BUNDLE /opt/homebrew/etc/ca-certificates/cert.pem
 set -gx NODE_EXTRA_CA_CERTS "$HOME/.zcli/zscaler_root.pem"
 set -gx GONOSUMDB 'persgroep.cloud/*'
 fish_add_path --append --path "$HOME/go/bin"
+# Docker Desktop (enterprise-installed) appends this itself when absent.
+fish_add_path --append --path "$HOME/.docker/bin"
 {{- end }}
 
 if status is-interactive
