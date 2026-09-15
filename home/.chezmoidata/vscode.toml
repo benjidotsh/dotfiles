@@ -23,5 +23,4 @@
 [vscode.personal]
 
 [vscode.work]
-# Jamf's "Disable VSCode updates" policy inserts this key when it is absent.
 "update.mode" = "none"
