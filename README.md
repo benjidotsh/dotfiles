@@ -35,5 +35,5 @@ chezmoi update
 ```
 
 This updates the source state, Homebrew software, VS Code extensions, global
-agent skills, and the personal Android SDK baseline, then repairs managed
-drift. Use `chezmoi apply --skip-secrets` when 1Password is intentionally unavailable.
+agent skills and plugins, and the personal Android SDK baseline, then repairs
+managed drift. Use `chezmoi apply --skip-secrets` when 1Password is intentionally unavailable.
