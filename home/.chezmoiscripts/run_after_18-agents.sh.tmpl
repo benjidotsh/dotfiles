@@ -1,0 +1,112 @@
+{{- $skills := merge (dict) .skills.common (index .skills .profile) -}}
+{{- $plugins := merge (dict) .plugins.common (index .plugins .profile) -}}
+{{- $declared := list -}}
+{{- $marketplaces := list -}}
+{{- range $plugins }}{{ range . }}
+{{- $declared = append $declared . -}}
+{{- $marketplaces = append $marketplaces (splitList "@" . | last) -}}
+{{- end }}{{ end -}}
+{{- $marketplaces = uniq $marketplaces -}}
+#!/bin/sh
+set -eu
+
+skills=/opt/homebrew/bin/skills
+claude=/opt/homebrew/bin/claude
+codex=/opt/homebrew/bin/codex
+copilot=/opt/homebrew/bin/copilot
+jq=/usr/bin/jq
+
+declared_plugins="{{ $declared | join " " }}"
+declared_marketplaces="{{ $marketplaces | join " " }}"
+
+run_quietly() {
+  failure_message=$1
+  shift
+
+  if "$@" >/dev/null 2>&1; then
+    return 0
+  else
+    command_status=$?
+    printf '%s\n' "$failure_message" >&2
+    return "$command_status"
+  fi
+}
+
+listed_in() {
+  needle=$1
+  for item in $2; do
+    [ "$item" = "$needle" ] && return 0
+  done
+  return 1
+}
+
+run_quietly "Failed to remove agent skills." "$skills" remove --all --global --yes
+{{ range $remote, $names := $skills -}}
+run_quietly {{ printf "Failed to add agent skills from %s." $remote | quote }} "$skills" add {{ $remote | quote }} --global --yes --agent "claude-code" "codex" "github-copilot" --skill{{ range $names }} {{ . | quote }}{{ end }}
+{{ end -}}
+
+# Each agent CLI is converged only where its profile installs it. Vendor
+# marketplaces (Anthropic's official, OpenAI's openai-*, Copilot's defaults) and
+# claude.ai-synced plugins are outside the authoritative set.
+if [ -x "$claude" ]; then
+{{- range $source, $ids := $plugins }}
+  run_quietly {{ printf "Failed to add Claude Code marketplace %s." $source | quote }} "$claude" plugin marketplace add {{ $source | quote }}
+{{- end }}
+  run_quietly "Failed to update Claude Code marketplaces." "$claude" plugin marketplace update
+{{- range $declared }}
+  run_quietly {{ printf "Failed to install Claude Code plugin %s." . | quote }} "$claude" plugin install {{ . | quote }} --scope user --yes
+  run_quietly {{ printf "Failed to update Claude Code plugin %s." . | quote }} "$claude" plugin update {{ . | quote }} --scope user --yes
+{{- end }}
+  installed=$("$claude" plugin list --json | "$jq" -r '.[] | select(.scope == "user" and (.id | endswith("@claude-plugins-official") | not)) | .id')
+  for id in $installed; do
+    listed_in "$id" "$declared_plugins" || run_quietly "Failed to uninstall Claude Code plugin $id." "$claude" plugin uninstall "$id" --scope user --yes
+  done
+  registered=$("$claude" plugin marketplace list --json | "$jq" -r '.[] | select(.name != "claude-plugins-official") | .name')
+  for name in $registered; do
+    listed_in "$name" "$declared_marketplaces" || run_quietly "Failed to remove Claude Code marketplace $name." "$claude" plugin marketplace remove "$name"
+  done
+fi
+
+if [ -x "$codex" ]; then
+{{- range $source, $ids := $plugins }}
+  run_quietly {{ printf "Failed to add Codex marketplace %s." $source | quote }} "$codex" plugin marketplace add {{ $source | quote }}
+{{- end }}
+  # Codex has no per-plugin update; upgrading the marketplace refreshes the snapshot that plugin add installs from.
+{{- range $marketplaces }}
+  run_quietly {{ printf "Failed to upgrade Codex marketplace %s." . | quote }} "$codex" plugin marketplace upgrade {{ . | quote }}
+{{- end }}
+{{- range $declared }}
+  run_quietly {{ printf "Failed to install Codex plugin %s." . | quote }} "$codex" plugin add {{ . | quote }}
+{{- end }}
+  installed=$("$codex" plugin list --json | "$jq" -r '.installed[] | select(.marketplaceName | startswith("openai-") | not) | .pluginId')
+  for id in $installed; do
+    listed_in "$id" "$declared_plugins" || run_quietly "Failed to remove Codex plugin $id." "$codex" plugin remove "$id"
+  done
+  registered=$("$codex" plugin marketplace list --json | "$jq" -r '.marketplaces[] | select(.name | startswith("openai-") | not) | .name')
+  for name in $registered; do
+    listed_in "$name" "$declared_marketplaces" || run_quietly "Failed to remove Codex marketplace $name." "$codex" plugin marketplace remove "$name"
+  done
+fi
+
+if [ -x "$copilot" ]; then
+  registered=$("$copilot" plugin marketplace list --json | "$jq" -r '.[] | select(.isDefault | not) | .name')
+{{- range $source, $ids := $plugins }}
+  # Copilot rejects re-adding a registered marketplace.
+  listed_in {{ splitList "@" (first $ids) | last | quote }} "$registered" || run_quietly {{ printf "Failed to add Copilot marketplace %s." $source | quote }} "$copilot" plugin marketplace add {{ $source | quote }}
+{{- end }}
+{{- range $marketplaces }}
+  run_quietly {{ printf "Failed to update Copilot marketplace %s." . | quote }} "$copilot" plugin marketplace update {{ . | quote }}
+{{- end }}
+{{- range $declared }}
+  run_quietly {{ printf "Failed to install Copilot plugin %s." . | quote }} "$copilot" plugin install {{ . | quote }}
+{{- end }}
+  installed=$("$copilot" plugin list --json | "$jq" -r '.[] | "\(.name)@\(.marketplace)"')
+  for id in $installed; do
+    listed_in "$id" "$declared_plugins" || run_quietly "Failed to uninstall Copilot plugin $id." "$copilot" plugin uninstall "$id"
+  done
+  for name in $registered; do
+    listed_in "$name" "$declared_marketplaces" || run_quietly "Failed to remove Copilot marketplace $name." "$copilot" plugin marketplace remove "$name"
+  done
+fi
+
+printf 'Updated %d agent skills and %d plugins.\n' {{ values $skills | toStrings | len }} {{ len $declared }}

@@ -32,3 +32,6 @@
 
 [skills.work]
 "https://backstage.io" = ["mui-to-bui-migration"]
+
+[plugins.common]
+"DietrichGebert/ponytail" = ["ponytail@ponytail"]
