@@ -17,9 +17,9 @@ formulae = [
 casks = [
   "1password",
   "1password-cli",
-  "chatgpt",
   "benjidotsh/tap/cloud-app",
-  "codex",
+  "claude",
+  "claude-code@latest",
   "discord",
   "font-meslo-lg-nerd-font",
   "ghostty",
@@ -41,7 +41,6 @@ vscode = [
   "dbaeumer.vscode-eslint",
   "eamodio.gitlens",
   "esbenp.prettier-vscode",
-  "openai.chatgpt",
   "prisma.prisma",
 ]
 
@@ -85,8 +84,6 @@ formulae = [
   "direnv",
 ]
 casks = [
-  "claude",
-  "claude-code@latest",
   "dbeaver-community",
   "httpie-desktop",
   "nosql-workbench",
