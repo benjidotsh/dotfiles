@@ -28,7 +28,7 @@
   "writing-for-agents",
 ]
 "https://github.com/ayghri/i-have-adhd" = ["i-have-adhd"]
-"https://github.com/cursor/plugins" = ["unslop"]
+"https://github.com/cursor/plugins/tree/main/pstack/skills/unslop" = ["unslop"]
 
 [skills.work]
 "https://backstage.io" = ["mui-to-bui-migration"]
