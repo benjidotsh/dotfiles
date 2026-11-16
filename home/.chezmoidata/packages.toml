@@ -76,7 +76,6 @@ vscode = [
 [packages.work]
 formulae = [
   "aws-sam-cli",
-  "azure-cli",
   "go",
   "hashicorp/tap/terraform",
   "sops",
@@ -84,6 +83,7 @@ formulae = [
   "direnv",
 ]
 casks = [
+  "azure-cli",
   "dbeaver-community",
   "httpie-desktop",
   "nosql-workbench",
